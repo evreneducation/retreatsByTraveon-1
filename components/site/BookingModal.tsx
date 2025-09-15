@@ -356,7 +356,7 @@ export function BookingModal({ pkg, children }: BookingModalProps) {
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-3">
                     <Phone className="h-4 w-4 text-blue-600" />
-                    <span>+91 98765 43210</span>
+                    <span>+91 9540111207 / +91 9540111307</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail className="h-4 w-4 text-blue-600" />

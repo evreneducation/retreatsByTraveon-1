@@ -1,4 +1,3 @@
-// components/site/SiteHeader.tsx
 "use client";
 
 import { useState } from "react";
@@ -11,11 +10,11 @@ import Logo from "./Logo";
 
 const navigation = [
   { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
   { name: "Wellness Retreats", href: "/retreats/wellness" },
   { name: "Corporate Retreats", href: "/retreats/corporate" },
   { name: "Community Tours", href: "/tours/community" },
   { name: "MICE Tours", href: "/tours/mice" },
-  { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -24,11 +23,12 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-25 items-center justify-between">
+    <header className="fixed top-0 left-0 z-50 w-full h-[80px] border-b bg-background/30 backdrop-blur supports-[backdrop-filter]:bg-background/30">
+      {/* Inner wrapper: full width with padding */}
+      <div className="flex h-full items-center justify-between px-4 sm:px-6 lg:px-12">
         {/* Logo */}
-        <Link href="/">
-          <Logo height={100} width={100} />
+        <Link href="/" className="flex items-center">
+          <Logo height={60} width={60} />
         </Link>
 
         {/* Desktop Navigation */}
@@ -51,7 +51,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* CTA Button */}
+        {/* CTA Button (Desktop only) */}
         <div className="hidden md:flex">
           <Button variant="hero" size="lg" asChild>
             <Link href="/contact">Plan Your Retreat</Link>
@@ -64,18 +64,14 @@ export function SiteHeader() {
           onClick={() => setIsMenuOpen((s) => !s)}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden border-t bg-background">
-          <nav className="container py-4 space-y-3">
+        <div className="md:hidden border-t bg-background mt-[80px]">
+          <nav className="px-4 sm:px-6 py-4 space-y-3">
             {navigation.map((item) => {
               const active = pathname === item.href;
               return (
@@ -84,9 +80,7 @@ export function SiteHeader() {
                   href={item.href}
                   className={_cn(
                     "block py-2 text-sm font-medium transition-smooth",
-                    active
-                      ? "text-primary"
-                      : "text-foreground hover:text-primary"
+                    active ? "text-primary" : "text-foreground hover:text-primary"
                   )}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -94,6 +88,8 @@ export function SiteHeader() {
                 </Link>
               );
             })}
+
+            {/* CTA in mobile menu */}
             <div className="pt-4">
               <Button variant="hero" size="lg" className="w-full" asChild>
                 <Link href="/contact">Plan Your Retreat</Link>

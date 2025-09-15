@@ -27,9 +27,10 @@ const pillars = [
     icon: Heart,
     image: "/wellness-retreats/1.jpg",
     images: [
-      "/wellness-retreats/1.jpg",
-      "/wellness-retreats/2.jpg",
-      "/wellness-retreats/3.jpg",
+      "/wellness-retreats/39.jpg",
+      "/wellness-retreats/40.jpg",
+      "/wellness-retreats/41.jpg",
+      "/wellness-retreats/42.jpg",
     ],
     href: "/retreats/wellness",
     color: "text-primary",
@@ -48,9 +49,11 @@ const pillars = [
     icon: Briefcase,
     image: "/corporate-retreats/1.jpeg",
     images: [
-      "/corporate-retreats/1.jpeg",
-      "/corporate-retreats/2.jpeg",
-      "/corporate-retreats/3.jpeg",
+      "/corporate-retreats/33.jpg",
+      "/corporate-retreats/34.jpg",
+      "/corporate-retreats/35.jpg",
+      "/corporate-retreats/36.jpg",
+      "/corporate-retreats/37.jpg",
     ],
     href: "/retreats/corporate",
     color: "text-secondary",
@@ -69,9 +72,10 @@ const pillars = [
     icon: Compass,
     image: "/community-tours/1.jpeg",
     images: [
-      "/community-tours/1.jpeg",
-      "/community-tours/2.jpeg",
-      "/community-tours/3.jpeg",
+      "/community-tours/32.jpg",
+      "/community-tours/29.jpg",
+      "/community-tours/26.jpg",
+      "/community-tours/28.jpg",
     ],
     href: "/tours/community",
     color: "text-accent",
@@ -172,7 +176,7 @@ export function PillarsGrid() {
     <>
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-          Four Paths to <span className="text-gradient">Transformation</span>
+          Four Paths to <span className="text-gradient">Rejuvenation</span>
         </h2>
         <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
           Whether seeking personal renewal, team growth, cultural connection, or

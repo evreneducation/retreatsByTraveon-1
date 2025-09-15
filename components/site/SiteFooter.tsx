@@ -71,11 +71,11 @@ export function SiteFooter() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-primary" />
-                <span className="text-sm">hello@retreatsbytraveon.com</span>
+                <span className="text-sm">info@traveon.in</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-primary" />
-                <span className="text-sm">+91 98765 43210</span>
+                <span className="text-sm">+91 9540111207 / +91 9540111307</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-primary" />

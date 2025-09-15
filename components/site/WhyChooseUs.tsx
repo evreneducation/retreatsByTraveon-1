@@ -62,7 +62,7 @@ export function WhyChooseUs() {
             Why <span className="text-gradient">Traveon</span>
           </h2>
           <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-            Four years of creating transformative experiences, with deep local
+            Five years of creating transformative experiences, with deep local
             knowledge and a commitment to authentic, sustainable, and impactful
             journeys.
           </p>

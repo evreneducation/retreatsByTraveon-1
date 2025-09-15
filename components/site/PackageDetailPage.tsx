@@ -366,14 +366,27 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
                   <Separator />
 
                   <div className="space-y-3">
-                    <Button className="w-full" size="lg">
-                      <Phone className="h-4 w-4 mr-2" />
-                      Book Now
-                    </Button>
-                    <Button variant="outline" className="w-full" size="lg">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Request Quote
-                    </Button>
+                    <a
+                      href="https://wa.me/9540111307?text=Hi! I'm interested to book a package."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button className="w-full" size="lg">
+                        <Phone className="h-4 w-4 mr-2" />
+                        Book Now
+                      </Button>
+                    </a>
+
+                    <a href="mailto:info@traveon.in?subject=Quote%20Request&body=Hello,%20I%20would%20like%20to%20request%20a%20quote.">
+                      <Button
+                        variant="outline"
+                        className="w-full mt-2"
+                        size="lg"
+                      >
+                        <Mail className="h-4 w-4 mr-2" />
+                        Request Quote
+                      </Button>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
@@ -452,16 +465,22 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-3">
                       <Phone className="h-4 w-4 text-blue-600" />
-                      <span>+91 98765 43210</span>
+                      <span>+91 9540111207 / +91 9540111307</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="h-4 w-4 text-blue-600" />
-                      <span>help@example.com</span>
+                      <span>info@traveon.in</span>
                     </div>
                   </div>
-                  <Button variant="outline" className="w-full mt-4" size="sm">
-                    Chat with us
-                  </Button>
+                  <a
+                    href="https://wa.me/9540111307?text=Hi!%20Planning%20to%20book%20a%20tour."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline" className="w-full mt-4" size="sm">
+                      Chat with us
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             </div>
@@ -475,7 +494,7 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
         />
 
         {/* FAQ Section */}
-        <div className="mt-16">
+        {/* <div className="mt-16">
           <h2 className="text-3xl font-bold mb-8 text-center">
             Frequently Asked Questions
           </h2>
@@ -530,7 +549,7 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
               </CardContent>
             </Card>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

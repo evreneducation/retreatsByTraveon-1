@@ -13,9 +13,7 @@ export const metadata: Metadata = {
     title: "Retreats by Traveon",
     description:
       "Immersive wellness, inspiring corporate offsites, community journeys, and MICE experiences.",
-    images: [
-      { url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" },
-    ],
+    images: [{ url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -24,17 +22,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${poppins.variable} ${nunito.variable}`}>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <div className="min-h-screen flex flex-col">
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          {/* push the page content down by header height so header won't overlap hero */}
+          <main className="flex-1 pt-[80px]">{children}</main>
           <SiteFooter />
           <Toaster />
         </div>

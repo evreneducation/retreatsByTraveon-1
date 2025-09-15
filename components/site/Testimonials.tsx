@@ -231,15 +231,15 @@ const testimonials: Testimonial[] = [
   },
   {
     content:
-      "The wellness retreat in Rishikesh completely transformed my perspective on work-life balance. The yoga sessions at sunrise and sound healing were exactly what my soul needed.",
-    author: "Priya Sharma",
-    role: "Marketing Director",
-    company: "Tech Startup",
+      "As a food lover, the wellness retreat helped me realize that it’s not just about eating, but about choosing the right food for a healthier and mindful life. I discovered that Satvik food is all we truly need to stay energetic and balanced.",
+    author: "Ankit Garg",
+    role: "Operational Manager",
+    company: "GMR Infrastructure",
     rating: 5,
     avatar: "PS",
     media: {
       type: "image",
-      src: "/testimonials/priya.jpg",
+      src: "/testimonials/4.png",
       format: "landscape",
     },
   },

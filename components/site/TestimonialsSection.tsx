@@ -34,10 +34,10 @@ const sampleTestimonials: Testimonial[] = [
   },
   {
     id: "2",
-    name: "Rajesh Kumar",
+    name: "Aditya Kumar",
     location: "Delhi, India",
     avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      "/testimonials/3.png",
     rating: 5,
     review:
       "Magical Muscat exceeded all expectations! The desert safari was breathtaking, and dolphin watching was unforgettable. Our guide was knowledgeable and the hotel was luxurious. Perfect family vacation.",
@@ -47,10 +47,10 @@ const sampleTestimonials: Testimonial[] = [
   },
   {
     id: "3",
-    name: "Sneha Patel",
+    name: "Anil Kumar",
     location: "Bangalore, India",
     avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      "/testimonials/1.png",
     rating: 5,
     review:
       "Seychelles was like paradise on earth! The group tour was perfectly organized, and La Digue island cycling was so much fun. The beaches were pristine and the local culture fascinating.",
@@ -60,13 +60,13 @@ const sampleTestimonials: Testimonial[] = [
   },
   {
     id: "4",
-    name: "Amit Agarwal",
+    name: "Arun Jain",
     location: "Pune, India",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      "/testimonials/2.png",
     rating: 4,
     review:
-      "The Inner Journey retreat with Anant was deeply healing. The combination of yoga, sound therapy, and Himalayan village trek created a perfect balance of spirituality and adventure. Highly recommended!",
+      "During the wellness retreat, I discovered a new sense of energy and positivity all around me. By practicing mindfulness daily, I now feel calmer, healthier, and more balanced in life.",
     packageTitle: "Nirvana — Inner Journey Meditation & Healing",
     travelDate: "December 2024",
     verified: true,
