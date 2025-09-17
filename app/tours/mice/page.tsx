@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   Briefcase,
   Gift,
@@ -15,55 +17,70 @@ import {
   Quote,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { CrossfadeCarousel } from "@/components/shared/CrossfadeCarousel";
+import type { MediaItem } from "@/components/shared/CrossfadeCarousel";
 
 export default function MicePage() {
   const whatsappUrl =
     "https://wa.me/9540111307?text=Hi! I'm interested in planning a MICE tour.";
 
+  const bannerMedia: MediaItem[] = [
+    { type: "image", src: "/mice-tours/2.jpg" },
+    { type: "image", src: "/mice-tours/3.jpg" },
+    { type: "image", src: "/mice-tours/4.jpg" },
+    { type: "image", src: "/mice-tours/1.jpg" },
+  ];
+
+  const [hovered, setHovered] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#44B3C4]/90 to-[#6BC273]/90 text-white">
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1542744095-291d1f67b221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80')",
-          }}
-        ></div>
-        <div className="relative z-10 container py-24 lg:py-32">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-              MICE <span className="text-[#F6B93B]">Tours</span>
-            </h1>
-            <p className="text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed">
-              Seamless meetings, incentives, conferences, and exhibitions
-            </p>
-            <div className="flex justify-center">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-[#44B3C4] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg inline-flex items-center gap-3 hover:scale-105 hover:shadow-xl"
-              >
-                <FaWhatsapp className="w-7 h-7" />
-                Plan Your MICE Tour
-              </a>
-            </div>
+      {/* ✅ Banner Carousel */}
+      <div
+        className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <CrossfadeCarousel
+          media={bannerMedia}
+          alt="MICE Tours"
+          interval={2500}
+          showDots
+          priority
+          className={hovered ? "pointer-events-none" : ""}
+        />
+
+        {/* Overlay Heading */}
+        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold drop-shadow-soft tracking-wide">
+            <span className="text-white">Mice</span>{" "}
+            <span className="text-[#F6B93B]">Tours</span>
+          </h1>
+          <p className="mt-3 text-base sm:text-lg md:text-xl text-white/90 font-body drop-shadow">
+            Seamlessly planned Meetings, Incentives, Conferences, and Exhibitions that blend professional goals with memorable travel.
+          </p>
+          <div className="mt-6 flex justify-center">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-[#44B3C4] px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg inline-flex items-center gap-3 hover:scale-105 hover:shadow-xl"
+            >
+              <FaWhatsapp className="w-6 h-6 sm:w-7 sm:h-7" />
+              Plan Your MICE Tour
+            </a>
           </div>
         </div>
-        <div className="absolute inset-0 gradient-hero" />
-      </section>
+      </div>
 
-      {/* Introduction Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      {/* ✅ Introduction Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Business Objectives, Immersive Experiences
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               At Retreats by Traveon, our MICE Tours are designed to combine
               business objectives with immersive travel experiences. We create
               programs that integrate corporate meetings, incentive trips,
@@ -76,9 +93,9 @@ export default function MicePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <img
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3132&q=80"
+                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80"
                 alt="Corporate team meeting"
-                className="rounded-2xl shadow-2xl"
+                className="rounded-2xl shadow-2xl w-full object-cover"
               />
             </div>
             <div className="space-y-6">

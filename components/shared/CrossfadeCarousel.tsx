@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useAutoCarousel } from "@/hooks/useAutoCarousel";
 import { useMemo, useState } from "react";
 
-type MediaItem =
+export type MediaItem =
   | { type: "image"; src: string }
   | {
       type: "video";

@@ -93,7 +93,7 @@ const pillars = [
     ],
     icon: Users,
     image: "/mice-tours/1.jpg",
-    images: ["/mice-tours/1.jpg", "/mice-tours/2.jpg", "/mice-tours/3.jpg"],
+    images: ["/mice-tours/1.jpg", "/mice-tours/2.jpg", "/mice-tours/3.jpg", "/mice-tours/4.jpg"],
     href: "/tours/mice",
     color: "text-primary",
     gradient: "from-primary/20 to-primary/5",

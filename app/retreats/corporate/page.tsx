@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   CheckCircle,
   Users,
@@ -11,56 +13,81 @@ import {
   Star,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { CrossfadeCarousel } from "@/components/shared/CrossfadeCarousel"; 
+import type { MediaItem } from "@/components/shared/CrossfadeCarousel";
+
 
 export default function CorporateRetreatsPage() {
   const whatsappUrl =
     "https://wa.me/9540111307?text=Hi! I'm interested in planning a corporate retreat.";
 
+  const bannerMedia: MediaItem[] = [
+    {
+      type: "image",
+      src: "/corporate-retreats/10.jpg"
+    },
+    {
+      type: "image",
+      src: "/corporate-retreats/7.jpg"
+    },
+    {
+      type: "image",
+      src: "/corporate-retreats/8.jpg"
+    },
+    {
+      type: "image",
+      src: "/corporate-retreats/6.jpg"
+    },
+  ];
+
+  const [hovered, setHovered] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#44B3C4]/90 to-[#6BC273]/90 text-white">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2949&q=80')",
-          }}
-        ></div>
-        <div className="relative z-10 page-center py-24 lg:py-32">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-              Corporate <span className="text-[#F6B93B]">Retreats</span>
-            </h1>
-            <p className="text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed">
-              Transform your team dynamics with purposeful retreats that combine
-              strategic planning, wellness, and immersive experiences
-            </p>
-            <div className="flex justify-center">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-[#44B3C4] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg inline-flex items-center gap-3 hover:scale-105 hover:shadow-xl"
-              >
-                <FaWhatsapp className="w-7 h-7" />
-                Plan Your Retreat
-              </a>
-            </div>
+      <div
+        className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <CrossfadeCarousel
+          media={bannerMedia}
+          alt="Corporate Retreats"
+          interval={2500}
+          showDots
+          priority
+          className={hovered ? "pointer-events-none" : ""}
+        />
+
+        {/* Overlay Content */}
+        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold drop-shadow-soft tracking-wide">
+            <span className="text-white">Corporate</span> <span className="text-[#F6B93B]">Retreats</span>
+          </h1>
+          <p className="mt-3 text-base sm:text-lg md:text-xl text-white/90 font-body drop-shadow">
+            Strengthen teamwork and boost productivity with thoughtfully designed retreats that combine business and leisure.
+          </p>
+          <div className="mt-6 flex justify-center">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-[#44B3C4] px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg inline-flex items-center gap-3 hover:scale-105 hover:shadow-xl"
+            >
+              <FaWhatsapp className="w-6 h-6 sm:w-7 sm:h-7" />
+              Plan Your Retreat
+            </a>
           </div>
         </div>
-        <div className="absolute inset-0 gradient-hero" />
-      </section>
+      </div>
 
-      {/* Introduction Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      {/* ✅ Introduction Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="page-center">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Beyond Ordinary Offsites
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               At Retreats by Traveon, we design corporate retreats that go
               beyond ordinary offsites. Our retreats combine strategic planning,
               wellness, team-building, and immersive experiences to enhance
@@ -69,60 +96,52 @@ export default function CorporateRetreatsPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#44B3C4] p-2 rounded-lg shrink-0">
-                    <Target className="w-6 h-6 text-white" />
+            <div className="space-y-6">
+              {[
+                {
+                  icon: Target,
+                  color: "#44B3C4",
+                  title: "Purposeful Design",
+                  description:
+                    "Every retreat is strategically designed to meet your specific organizational objectives and team dynamics.",
+                },
+                {
+                  icon: Users,
+                  color: "#6BC273",
+                  title: "Professional Execution",
+                  description:
+                    "Experienced planners and trusted local partners ensure seamless logistics and flawless delivery.",
+                },
+                {
+                  icon: TrendingUp,
+                  color: "#F6B93B",
+                  title: "Measurable Impact",
+                  description:
+                    "Retreats that strengthen relationships, boost engagement, and enhance team performance with lasting results.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="flex items-start space-x-4">
+                  <div
+                    className="p-2 rounded-lg shrink-0"
+                    style={{ backgroundColor: item.color }}
+                  >
+                    <item.icon className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      Purposeful Design
+                      {item.title}
                     </h3>
-                    <p className="text-gray-600">
-                      Every retreat is strategically designed to meet your
-                      specific organizational objectives and team dynamics.
-                    </p>
+                    <p className="text-gray-600">{item.description}</p>
                   </div>
                 </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#6BC273] p-2 rounded-lg shrink-0">
-                    <Users className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      Professional Execution
-                    </h3>
-                    <p className="text-gray-600">
-                      Experienced planners and trusted local partners ensure
-                      seamless logistics and flawless delivery.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#F6B93B] p-2 rounded-lg shrink-0">
-                    <TrendingUp className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      Measurable Impact
-                    </h3>
-                    <p className="text-gray-600">
-                      Retreats that strengthen relationships, boost engagement,
-                      and enhance team performance with lasting results.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1600&q=80"
                 alt="Team collaboration"
-                className="rounded-2xl shadow-2xl"
+                className="rounded-2xl shadow-2xl w-full object-cover"
               />
               <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg">
                 <div className="flex items-center space-x-2">
