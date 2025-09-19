@@ -44,7 +44,7 @@ export function CrossfadeCarousel({
   const [hovered, setHovered] = useState(false);
 
   const safeMedia = useMemo(
-    () => (media.length ? media : [{ type: "image", src: "/placeholder.png" }]),
+    () => (media.length ? media : [{ type: "image", src: "/placeholder.jpg" }]),
     [media]
   );
 

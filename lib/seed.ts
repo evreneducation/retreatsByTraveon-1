@@ -70,13 +70,13 @@ export const seedPackages: Package[] = [
     currency: "INR",
     heroImage: "/muscat/1.jpg",
     gallery: [
+      "/muscat/1.jpg",
       "/muscat/2.jpg",
       "/muscat/3.jpg",
       "/muscat/4.jpg",
       "/muscat/5.jpg",
       "/muscat/6.jpg",
       "/muscat/7.jpg",
-      "/muscat/8.jpg",
     ],
     highlights: [
       "Muscat City Tour",
@@ -153,7 +153,7 @@ export const seedPackages: Package[] = [
       },
     ],
     partner: "Retreats by Traveon",
-    partnerLogo: "/logo/logo-sq.png",
+    partnerLogo: "/logo/logo-sq.jpg",
     isFeatured: true,
   },
 
@@ -161,7 +161,7 @@ export const seedPackages: Package[] = [
   {
     id: "nirvana-arunanand-4d",
     slug: "nirvana-holistic-wellness-arunanand",
-    title: "Nirvana — A Holistic Wellness Retreat",
+    title: "Nirvana — Anantam a Holistic Wellness Retreat",
     category: "Wellness",
     summary:
       "4 days of yoga, meditation, sound healing, and conscious living led by Arunanand Saraswati in the Himalayas.",
@@ -245,7 +245,7 @@ export const seedPackages: Package[] = [
       },
     ],
     partner: "Arunanand Saraswati",
-    partnerLogo: "/rishikesh/anantam.png",
+    partnerLogo: "/rishikesh/anantam.jpg",
   },
 
   // --- Seychelles Group Tour ---
@@ -336,7 +336,7 @@ export const seedPackages: Package[] = [
       },
     ],
     partner: "Holiday Seychelles",
-    partnerLogo: "/logo/hs-logo.png",
+    partnerLogo: "/logo/hs-logo.jpg",
     isFeatured: true,
   },
 
@@ -435,7 +435,7 @@ export const seedPackages: Package[] = [
       },
     ],
     partner: "Anant Gogia",
-    partnerLogo: "/anant/partnerlogo.png",
+    partnerLogo: "/anant/partnerlogo.jpg",
     isFeatured: true,
   },
 ];

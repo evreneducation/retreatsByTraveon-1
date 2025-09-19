@@ -9,12 +9,13 @@ import { useEffect, useRef, useState } from "react";
 /* ---------------- Types ---------------- */
 
 type Media = {
-  type: "video" | "image";
-  src: string; // /testimonials/1.mp4 OR /assets/...jpg
+  type: "video" | "image" | "youtube";
+  src: string; // /testimonials/1.mp4 OR /assets/...jpg OR YouTube embed URL
   poster?: string; // optional poster for video (or image fallback)
   format?: "portrait" | "landscape"; // portrait = 9:16, landscape = 16:9
   autoplayOnView?: boolean; // 👈 new: autoplay when card is visible
   loop?: boolean; // optional: loop video (default true)
+  youtubeId?: string; // YouTube video ID for embedded videos
 };
 
 type Testimonial = {
@@ -27,6 +28,125 @@ type Testimonial = {
   media?: Media;
   trip?: string;
 };
+
+/* ---------------- YouTube Embed Component ---------------- */
+function YouTubeEmbed({
+  youtubeId,
+  title,
+  format = "landscape",
+}: {
+  youtubeId: string;
+  title: string;
+  format?: "portrait" | "landscape";
+}) {
+  const [isMuted, setIsMuted] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+
+  const pad =
+    format === "portrait"
+      ? "pt-[177.78%]" /* 9:16 */
+      : "pt-[56.25%]"; /* 16:9 */
+
+  // Set client-side flag
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Observe visibility for autoplay
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && e.intersectionRatio >= 0.3) {
+            setIsVisible(true);
+          } else {
+            setIsVisible(false);
+          }
+        }
+      },
+      { threshold: [0, 0.3, 0.7] }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Handle mute toggle by sending postMessage to iframe
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const iframe = iframeRef.current;
+    if (iframe && iframe.contentWindow) {
+      const command = isMuted ? 'unMute' : 'mute';
+      iframe.contentWindow.postMessage(
+        `{"event":"command","func":"${command}","args":""}`,
+        '*'
+      );
+    }
+    setIsMuted(!isMuted);
+  };
+
+  // YouTube embed URL with parameters for clean autoplay
+  const embedUrl = `https://www.youtube.com/embed/${youtubeId}?${new URLSearchParams({
+    autoplay: isVisible ? '1' : '0',
+    mute: '1',
+    controls: '0',
+    showinfo: '0',
+    rel: '0',
+    modestbranding: '1',
+    iv_load_policy: '3',
+    cc_load_policy: '0',
+    disablekb: '1',
+    fs: '0',
+    loop: '1',
+    playlist: youtubeId, // Required for loop to work
+    enablejsapi: '1',
+    origin: isClient && typeof window !== 'undefined' ? window.location.origin : '',
+  }).toString()}`;
+
+  return (
+    <div
+      ref={wrapperRef}
+      className={`relative w-full ${pad} rounded-xl overflow-hidden shadow-card bg-background group`}
+    >
+      <iframe
+        ref={iframeRef}
+        src={embedUrl}
+        title={title}
+        className="absolute inset-0 h-full w-full pointer-events-auto"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen={false}
+      />
+      
+      {/* Custom Mute/Unmute Toggle */}
+      <button
+        onClick={toggleMute}
+        className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/70 hover:bg-black/80 text-white flex items-center justify-center transition-all duration-200 hover:scale-110 opacity-0 group-hover:opacity-100"
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3.63 3.63a.996.996 0 0 0-1.41 1.41L7.29 10.1 7 10.38V20c0 .55.45 1 1 1h.01c.2 0 .39-.08.54-.22L12 17.32V21c0 .55.45 1 1 1s1-.45 1-1v-8.68l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.56-.77 2.24-1.31l1.58 1.58a.996.996 0 1 0 1.41-1.41L3.63 3.63zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-3.83-2.4-7.11-5.78-8.4-.59-.23-1.22.23-1.22.86v.19c0 .38.25.71.61.85C17.18 6.54 19 9.06 19 12zm-8.71-6.29L10.05 6l-.01.01L8.59 7.46c-.31.31-.76.45-1.16.32C7.08 7.66 6.75 7.34 6.75 7V5c0-.55.45-1 1-1 .2 0 .39.08.54.22z"/>
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 10v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71V6.41c0-.89-1.08-1.34-1.71-.71L7 9H4c-.55 0-1 .45-1 1zm13.5 2A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 4.45v.2c0 .38.25.71.6.85C17.18 6.53 19 9.06 19 12s-1.82 5.47-4.4 6.5c-.36.14-.6.47-.6.85v.2c0 .63.63 1.07 1.21.85C18.6 19.11 21 15.84 21 12s-2.4-7.11-5.79-8.4c-.58-.22-1.21.22-1.21.85z"/>
+          </svg>
+        )}
+      </button>
+
+      {/* Overlay to hide YouTube controls on hover */}
+      <div className="absolute inset-0 pointer-events-none bg-transparent" />
+    </div>
+  );
+}
 
 /* ---------------- Light HTML5 Video ----------------
    - Shows poster by default.
@@ -49,6 +169,8 @@ function LightVideo({
   loop?: boolean;
 }) {
   const [playing, setPlaying] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -83,23 +205,64 @@ function LightVideo({
   // Keep the <video> element in control when visibility toggles
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || videoError) return;
+
+    // Always sync the muted state
+    v.muted = isMuted;
 
     if (playing) {
       // ensure muted is set before play (iOS/Safari)
-      v.muted = true;
-      const p = v.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {
-          /* ignore autoplay errors */
+      const playPromise = v.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch((error) => {
+          console.warn("Video autoplay failed:", error);
+          // Don't set error state for autoplay failures, just log them
         });
       }
     } else {
       try {
         v.pause();
-      } catch {}
+      } catch (error) {
+        console.warn("Video pause failed:", error);
+      }
     }
-  }, [playing]);
+  }, [playing, videoError, isMuted]);
+
+  // Handle mute toggle
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMuted(!isMuted);
+  };
+
+  // Handle video errors
+  const handleVideoError = () => {
+    console.warn("Video failed to load:", src);
+    setVideoError(true);
+    setPlaying(false);
+  };
+
+  // If video failed to load, show poster or placeholder
+  if (videoError) {
+    return (
+      <div
+        className={`relative w-full ${pad} rounded-xl overflow-hidden shadow-card bg-background`}
+      >
+        {poster ? (
+          <Image
+            src={poster}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-muted/20 flex items-center justify-center">
+            <div className="text-muted-foreground text-sm">Video unavailable</div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -148,14 +311,36 @@ function LightVideo({
           ref={videoRef}
           src={src}
           className="absolute inset-0 h-full w-full object-cover"
-          muted
+          muted={isMuted}
           playsInline
-          autoPlay
-          controls
           loop={loop}
-          preload={autoplayOnView ? "auto" : "metadata"}
-          aria-label={title}
-        />
+          preload={autoplayOnView ? "metadata" : "none"}
+          onError={handleVideoError}
+          onLoadStart={() => setVideoError(false)}
+        >
+          <source src={src} type="video/mp4" />
+          <source src={src} type="video/mov" />
+          Your browser does not support the video tag.
+        </video>
+      )}
+
+      {/* Mute/Unmute Toggle - Show when video is playing or autoplayOnView is enabled */}
+      {(playing || autoplayOnView) && !videoError && (
+        <button
+          onClick={toggleMute}
+          className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/70 hover:bg-black/80 text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
+        >
+          {isMuted ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3.63 3.63a.996.996 0 0 0-1.41 1.41L7.29 10.1 7 10.38V20c0 .55.45 1 1 1h.01c.2 0 .39-.08.54-.22L12 17.32V21c0 .55.45 1 1 1s1-.45 1-1v-8.68l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.56-.77 2.24-1.31l1.58 1.58a.996.996 0 1 0 1.41-1.41L3.63 3.63zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-3.83-2.4-7.11-5.78-8.4-.59-.23-1.22.23-1.22.86v.19c0 .38.25.71.61.85C17.18 6.54 19 9.06 19 12zm-8.71-6.29L10.05 6l-.01.01L8.59 7.46c-.31.31-.76.45-1.16.32C7.08 7.66 6.75 7.34 6.75 7V5c0-.55.45-1 1-1 .2 0 .39.08.54.22z"/>
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 10v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71V6.41c0-.89-1.08-1.34-1.71-.71L7 9H4c-.55 0-1 .45-1 1zm13.5 2A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 4.45v.2c0 .38.25.71.6.85C17.18 6.53 19 9.06 19 12s-1.82 5.47-4.4 6.5c-.36.14-.6.47-.6.85v.2c0 .63.63 1.07 1.21.85C18.6 19.11 21 15.84 21 12s-2.4-7.11-5.79-8.4c-.58-.22-1.21.22-1.21.85z"/>
+            </svg>
+          )}
+        </button>
       )}
 
       {/* If autoplayOnView and not yet playing (not visible enough), show the poster behind the future video mount */}
@@ -173,7 +358,7 @@ function LightVideo({
 }
 
 /* ---------------- Media Frame ----------------
-   Renders either an image or a (light) local video with correct aspect.
+   Renders either an image, a (light) local video, or a YouTube embed with correct aspect.
 ------------------------------------------------ */
 function MediaFrame({ media, title }: { media?: Media; title: string }) {
   if (!media) return null;
@@ -193,6 +378,16 @@ function MediaFrame({ media, title }: { media?: Media; title: string }) {
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
+    );
+  }
+
+  if (media.type === "youtube" && media.youtubeId) {
+    return (
+      <YouTubeEmbed
+        youtubeId={media.youtubeId}
+        title={title}
+        format={format}
+      />
     );
   }
 
@@ -221,25 +416,37 @@ const testimonials: Testimonial[] = [
     avatar: "MS",
     trip: "Pattaya & Bangkok, Thailand",
     media: {
-      type: "video",
-      src: "/testimonials/1.mp4", // put the file in /public/testimonials/1.mp4
-      // poster: "/assets/testimonials/thailand-senior-group.jpg",
-      format: "portrait", // reel-style 9:16
-      autoplayOnView: true, // 👈 will autoplay (muted) when visible
-      loop: true,
+      type: "youtube",
+      youtubeId: "PYR3zh_TFiY",
+      format: "portrait",
+      src: ""
     },
   },
   {
     content:
-      "As a food lover, the wellness retreat helped me realize that it’s not just about eating, but about choosing the right food for a healthier and mindful life. I discovered that Satvik food is all we truly need to stay energetic and balanced.",
-    author: "Ankit Garg",
-    role: "Operational Manager",
-    company: "GMR Infrastructure",
+      "The community tour through Oman opened our eyes to authentic Arabia. Every interaction felt genuine, and the local connections we made were priceless.",
+    author: "Vishal Vashisht",
+    role: "Last Resort Estate",
+    company: "",
     rating: 5,
-    avatar: "PS",
+    avatar: "VV",
     media: {
       type: "image",
-      src: "/testimonials/4.png",
+      src: "/testimonials/oman.jpg",
+      format: "landscape",
+    },
+  },
+  {
+    content:
+      "As a food lover, the wellness retreat helped me realize that it's not just about eating, but about choosing the right food for a healthier and mindful life. I discovered that Satvik food is all we truly need to stay energetic and balanced.",
+    author: "Ankit Garg",
+    role: "Operation Manager",
+    company: "GMR Infrastructure",
+    rating: 5,
+    avatar: "AG",
+    media: {
+      type: "image",
+      src: "/testimonials/4.jpg",
       format: "landscape",
     },
   },
@@ -253,31 +460,32 @@ const testimonials: Testimonial[] = [
     avatar: "RK",
   },
   {
-    content:
-      "The community tour through Oman opened our eyes to authentic Arabia. Every interaction felt genuine, and the local connections we made were priceless.",
-    author: "Rahul Mehta",
-    role: "Travel Blogger",
-    company: "Wanderlust Weekly",
+    author: "Meenakshi Bansal",
+    role: "Manager, Human Capital - KKR",
     rating: 5,
-    avatar: "ET",
-    media: {
-      type: "image",
-      src: "/testimonials/oman.jpeg",
-      format: "landscape",
-    },
-  },
-  {
-    author: "Aisha Khan",
-    role: "Freelance Designer",
-    rating: 5,
-    avatar: "AK",
+    avatar: "MB",
     trip: "Almaty & Astana, Kazakhstan",
     content:
       "Exploring Kazakhstan with Traveon was an unforgettable experience. From the bustling markets of Almaty to the futuristic skyline of Astana, every moment was filled with wonder and discovery. The local guides were incredibly knowledgeable and made us feel at home.",
     media: {
       type: "image",
-      src: "/testimonials/almaty.jpeg",
+      src: "/testimonials/5.jpg",
       format: "landscape",
+    },
+  },
+  {
+    content:
+      "The session was absolutely amazing. I had a great time experiencing the vibrations. I felt it all over my body. Even though it was midday on a workday, this helped me unwind for thirty minutes. I'm really grateful!",
+    author: "Lokesh",
+    role: "Google", 
+    company: "Gurugram",
+    rating: 5,
+    avatar: "L",
+    media: {
+      type: "youtube",
+      youtubeId: "oyBmIPONT-0",
+      format: "portrait",
+      src: ""
     },
   },
 ];
@@ -321,7 +529,7 @@ export function Testimonials() {
             const hasMedia = !!t.media;
             return (
               <Card
-                key={index}
+                key={`testimonial-${index}-${t.author.replace(/\s+/g, '-').toLowerCase()}`}
                 className="relative p-8 shadow-card hover:shadow-floating transition-spring bg-gradient-to-br from-background to-primary/5 border-0 mb-8 break-inside-avoid"
               >
                 {/* Hide quote if media exists to avoid overlay */}
@@ -352,7 +560,7 @@ export function Testimonials() {
 
                   {/* Content */}
                   <blockquote className="text-lg leading-relaxed font-light italic">
-                    “{t.content}”
+                    "{t.content}"
                   </blockquote>
 
                   {/* Author */}
@@ -396,7 +604,7 @@ export function Testimonials() {
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold font-heading mb-2">
-              500+
+              100+
             </div>
             <div className="text-sm opacity-90 uppercase tracking-wide">
               5-Star Reviews
@@ -404,7 +612,7 @@ export function Testimonials() {
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold font-heading mb-2">
-              88%
+              57%
             </div>
             <div className="text-sm opacity-90 uppercase tracking-wide">
               Return Guests

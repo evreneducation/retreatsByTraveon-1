@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, Play, Pause } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 
 interface Testimonial {
   id: string;
@@ -16,60 +17,167 @@ interface Testimonial {
   packageTitle: string;
   travelDate: string;
   verified: boolean;
+  videoUrl?: string;
+  type?: 'text' | 'video';
+}
+
+interface LightVideoProps {
+  src: string;
+  autoplayOnView?: boolean;
+  className?: string;
+  controls?: boolean;
+  muted?: boolean;
+  loop?: boolean;
+  poster?: string;
+}
+
+// LightVideo Component
+function LightVideo({ 
+  src, 
+  autoplayOnView = false, 
+  className = "",
+  controls = true,
+  muted = true,
+  loop = false,
+  poster
+}: LightVideoProps) {
+  const [playing, setPlaying] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+        if (autoplayOnView && entry.isIntersecting) {
+          setPlaying(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [autoplayOnView]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (playing) {
+        videoRef.current.play().catch(console.error);
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [playing]);
+
+  const togglePlay = () => {
+    setPlaying(!playing);
+  };
+
+  return (
+    <div ref={containerRef} className={`relative ${className}`}>
+      {/* For click-to-play case, mount only when playing to avoid initial buffering. */}
+      {(autoplayOnView || playing || isInView) && (
+        <video
+          ref={videoRef}
+          src={src}
+          className="absolute inset-0 h-full w-full object-cover rounded-lg"
+          controls={controls}
+          muted={muted}
+          loop={loop}
+          poster={poster}
+          playsInline
+          preload="metadata"
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onError={(e) => console.error('Video error:', e)}
+        />
+      )}
+      
+      {/* Play/Pause Overlay */}
+      {!controls && (
+        <button
+          onClick={togglePlay}
+          className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all"
+        >
+          {playing ? (
+            <Pause className="h-12 w-12 text-white" />
+          ) : (
+            <Play className="h-12 w-12 text-white" />
+          )}
+        </button>
+      )}
+      
+      {/* Fallback for when video is not loaded */}
+      {!playing && !autoplayOnView && poster && (
+        <div 
+          className="absolute inset-0 bg-cover bg-center rounded-lg"
+          style={{ backgroundImage: `url(${poster})` }}
+        />
+      )}
+    </div>
+  );
 }
 
 // Sample testimonials - you can replace with real data
 const sampleTestimonials: Testimonial[] = [
   {
     id: "1",
-    name: "Priya Sharma",
+    name: "Meenakshi Bansal",
     location: "Mumbai, India",
-    avatar: "/testimonials/priya.jpg",
+    avatar: "/testimonials/5.jpg",
     rating: 5,
     review:
       "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for. The ashram setting by the Ganges was perfect.",
-    packageTitle: "Nirvana — A Holistic Wellness Retreat",
+    packageTitle: "Nirvana — Anantam a Holistic Wellness Retreat",
     travelDate: "October 2024",
     verified: true,
+    type: 'text'
   },
   {
     id: "2",
     name: "Aditya Kumar",
     location: "Delhi, India",
-    avatar:
-      "/testimonials/3.png",
+    avatar: "/testimonials/3.jpg",
     rating: 5,
     review:
       "Magical Muscat exceeded all expectations! The desert safari was breathtaking, and dolphin watching was unforgettable. Our guide was knowledgeable and the hotel was luxurious. Perfect family vacation.",
     packageTitle: "Magical Muscat — 5 Days / 4 Nights",
     travelDate: "November 2024",
     verified: true,
+    type: 'video'
   },
   {
     id: "3",
     name: "Anil Kumar",
     location: "Bangalore, India",
-    avatar:
-      "/testimonials/1.png",
+    avatar: "/testimonials/1.jpg",
     rating: 5,
     review:
       "Seychelles was like paradise on earth! The group tour was perfectly organized, and La Digue island cycling was so much fun. The beaches were pristine and the local culture fascinating.",
     packageTitle: "Seychelles — Fixed Departure Group Tour",
     travelDate: "October 2024",
     verified: true,
+    type: 'text'
   },
   {
     id: "4",
     name: "Arun Jain",
     location: "Pune, India",
-    avatar:
-      "/testimonials/2.png",
+    avatar: "/testimonials/2.jpg",
     rating: 4,
     review:
       "During the wellness retreat, I discovered a new sense of energy and positivity all around me. By practicing mindfulness daily, I now feel calmer, healthier, and more balanced in life.",
     packageTitle: "Nirvana — Inner Journey Meditation & Healing",
     travelDate: "December 2024",
     verified: true,
+    type: 'text'
   },
 ];
 
@@ -123,10 +231,26 @@ export function TestimonialsSection({
           >
             <Card className="h-full hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <Quote className="h-8 w-8 text-blue-500 opacity-60" />
-                </div>
+                {/* Video Testimonial */}
+                {testimonial.type === 'video' && testimonial.videoUrl && (
+                  <div className="mb-4 h-48 relative rounded-lg overflow-hidden">
+                    <LightVideo
+                      src={testimonial.videoUrl}
+                      autoplayOnView={false}
+                      className="h-full w-full"
+                      controls={true}
+                      muted={true}
+                      poster={testimonial.avatar}
+                    />
+                  </div>
+                )}
+
+                {/* Quote Icon for text testimonials */}
+                {testimonial.type !== 'video' && (
+                  <div className="mb-4">
+                    <Quote className="h-8 w-8 text-blue-500 opacity-60" />
+                  </div>
+                )}
 
                 {/* Rating */}
                 <div className="flex items-center gap-1 mb-4">
@@ -156,6 +280,11 @@ export function TestimonialsSection({
                       alt={testimonial.name}
                       fill
                       className="object-cover"
+                      onError={(e) => {
+                        // Fallback for broken images
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/fallback-avatar.png';
+                      }}
                     />
                   </div>
                   <div className="flex-1">
@@ -186,7 +315,7 @@ export function TestimonialsSection({
       {/* View All Reviews Link */}
       {filteredTestimonials.length > limit && (
         <div className="text-center mt-8">
-          <button className="text-blue-600 hover:text-blue-800 font-medium">
+          <button className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
             View All Reviews ({filteredTestimonials.length - limit} more)
           </button>
         </div>
@@ -194,7 +323,7 @@ export function TestimonialsSection({
 
       {/* Trust Indicators */}
       <div className="mt-12 text-center">
-        <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+        <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground flex-wrap">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
             <span>500+ Happy Travelers</span>

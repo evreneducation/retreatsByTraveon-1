@@ -11,10 +11,11 @@ export default function WellnessPage() {
 
   // Banner images
   const bannerMedia: MediaItem[] = [
-  { type: "image", src: "/wellness-retreats/1.jpg"},
-  { type: "image", src: "/wellness-retreats/2.jpg"},
-  { type: "image", src: "/wellness-retreats/3.jpg"},
-  { type: "image", src: "/wellness-retreats/4.jpg"},
+  { type: "image", src: "/wellness-retreats/13.jpg"},
+  { type: "image", src: "/wellness-retreats/14.jpg"},
+  { type: "image", src: "/wellness-retreats/12.jpg"},
+  { type: "image", src: "/wellness-retreats/18.jpg"},
+  { type: "image", src: "/wellness-retreats/40.webp"},
 ];
 
   const [hovered, setHovered] = useState(false);

@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 export const metadata: Metadata = {
   title: "Retreats by Traveon",
   description: "Retreats that Renew, Teams that Thrive.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/logo/logobg.png" }],
   openGraph: {
     title: "Retreats by Traveon",
     description:

@@ -11,10 +11,11 @@ export default function CommunityPage() {
 
   // Banner images
   const bannerMedia: MediaItem[] = [
-    { type: "image", src: "/community-tours/2.jpg"},
-    { type: "image", src: "/community-tours/3.jpg"},
+    { type: "image", src: "/community-tours/19.jpg"},
     { type: "image", src: "/community-tours/1.jpg"},
+    { type: "image", src: "/community-tours/3.jpg"},
     { type: "image", src: "/community-tours/32.jpg"},
+    { type: "image", src: "/community-tours/26.jpg"},
 ];
   const [hovered, setHovered] = useState(false);
 
