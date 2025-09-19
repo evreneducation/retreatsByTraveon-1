@@ -30,7 +30,7 @@ const pillars = [
       "/wellness-retreats/21.jpg",
       "/wellness-retreats/22.jpg",
       "/wellness-retreats/20.jpg",
-      "/wellness-retreats/40.jpg",
+      "/wellness-retreats/40.webp",
     ],
     href: "/retreats/wellness",
     color: "text-primary",
