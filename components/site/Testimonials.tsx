@@ -467,7 +467,7 @@ const testimonials: Testimonial[] = [
     avatar: "AG",
     trip: "Rishikesh, India",
     content:
-      "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for. The ashram setting by the Ganges was perfect.",
+      "Exploring Kazakhstan with Traveon was an unforgettable experience. From the bustling markets of Almaty to the futuristic skyline of Astana, every moment was filled with wonder and discovery. The local guides were incredibly knowledgeable and made us feel at home.",
     media: {
       type: "image",
       src: "/testimonials/ag.jpg",

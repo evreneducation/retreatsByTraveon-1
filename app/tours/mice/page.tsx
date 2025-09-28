@@ -295,8 +295,8 @@ export default function MicePage() {
           </div>
           <div className="grid lg:grid-cols-3 gap-8">
             {[
-              "Our MICE tour with Traveon was flawless. We combined business meetings, team bonding, and cultural exploration seamlessly.",
-              "The incentive tour was a perfect reward for our top performers—luxurious, engaging, and unforgettable.",
+              "As a food lover, the wellness retreat helped me realize that it's not just about eating, but about choosing the right food for a healthier and mindful life. I discovered that Satvik food is all we truly need to stay energetic and balanced.",
+              "Our corporate team came back energized and more collaborative than ever. The sound healing and meditation sessions were highly relaxing.",
               "Every detail was managed professionally, making our conference-tour a truly memorable experience for all participants.",
             ].map((testimonial, index) => (
               <div
