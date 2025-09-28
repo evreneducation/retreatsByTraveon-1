@@ -465,7 +465,7 @@ const testimonials: Testimonial[] = [
     role: "Mumbai, India",
     rating: 5,
     avatar: "AG",
-    trip: "Rishikesh, India",
+    trip: "Kazakhstan",
     content:
       "Exploring Kazakhstan with Traveon was an unforgettable experience. From the bustling markets of Almaty to the futuristic skyline of Astana, every moment was filled with wonder and discovery. The local guides were incredibly knowledgeable and made us feel at home.",
     media: {
