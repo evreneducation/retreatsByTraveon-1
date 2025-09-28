@@ -82,32 +82,35 @@ function YouTubeEmbed({
     e.stopPropagation();
     const iframe = iframeRef.current;
     if (iframe && iframe.contentWindow) {
-      const command = isMuted ? 'unMute' : 'mute';
+      const command = isMuted ? "unMute" : "mute";
       iframe.contentWindow.postMessage(
         `{"event":"command","func":"${command}","args":""}`,
-        '*'
+        "*"
       );
     }
     setIsMuted(!isMuted);
   };
 
   // YouTube embed URL with parameters for clean autoplay
-  const embedUrl = `https://www.youtube.com/embed/${youtubeId}?${new URLSearchParams({
-    autoplay: isVisible ? '1' : '0',
-    mute: '1',
-    controls: '0',
-    showinfo: '0',
-    rel: '0',
-    modestbranding: '1',
-    iv_load_policy: '3',
-    cc_load_policy: '0',
-    disablekb: '1',
-    fs: '0',
-    loop: '1',
-    playlist: youtubeId, // Required for loop to work
-    enablejsapi: '1',
-    origin: isClient && typeof window !== 'undefined' ? window.location.origin : '',
-  }).toString()}`;
+  const embedUrl = `https://www.youtube.com/embed/${youtubeId}?${new URLSearchParams(
+    {
+      autoplay: isVisible ? "1" : "0",
+      mute: "1",
+      controls: "0",
+      showinfo: "0",
+      rel: "0",
+      modestbranding: "1",
+      iv_load_policy: "3",
+      cc_load_policy: "0",
+      disablekb: "1",
+      fs: "0",
+      loop: "1",
+      playlist: youtubeId, // Required for loop to work
+      enablejsapi: "1",
+      origin:
+        isClient && typeof window !== "undefined" ? window.location.origin : "",
+    }
+  ).toString()}`;
 
   return (
     <div
@@ -124,7 +127,7 @@ function YouTubeEmbed({
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen={false}
       />
-      
+
       {/* Custom Mute/Unmute Toggle */}
       <button
         onClick={toggleMute}
@@ -133,11 +136,11 @@ function YouTubeEmbed({
       >
         {isMuted ? (
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3.63 3.63a.996.996 0 0 0-1.41 1.41L7.29 10.1 7 10.38V20c0 .55.45 1 1 1h.01c.2 0 .39-.08.54-.22L12 17.32V21c0 .55.45 1 1 1s1-.45 1-1v-8.68l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.56-.77 2.24-1.31l1.58 1.58a.996.996 0 1 0 1.41-1.41L3.63 3.63zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-3.83-2.4-7.11-5.78-8.4-.59-.23-1.22.23-1.22.86v.19c0 .38.25.71.61.85C17.18 6.54 19 9.06 19 12zm-8.71-6.29L10.05 6l-.01.01L8.59 7.46c-.31.31-.76.45-1.16.32C7.08 7.66 6.75 7.34 6.75 7V5c0-.55.45-1 1-1 .2 0 .39.08.54.22z"/>
+            <path d="M3.63 3.63a.996.996 0 0 0-1.41 1.41L7.29 10.1 7 10.38V20c0 .55.45 1 1 1h.01c.2 0 .39-.08.54-.22L12 17.32V21c0 .55.45 1 1 1s1-.45 1-1v-8.68l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.56-.77 2.24-1.31l1.58 1.58a.996.996 0 1 0 1.41-1.41L3.63 3.63zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-3.83-2.4-7.11-5.78-8.4-.59-.23-1.22.23-1.22.86v.19c0 .38.25.71.61.85C17.18 6.54 19 9.06 19 12zm-8.71-6.29L10.05 6l-.01.01L8.59 7.46c-.31.31-.76.45-1.16.32C7.08 7.66 6.75 7.34 6.75 7V5c0-.55.45-1 1-1 .2 0 .39.08.54.22z" />
           </svg>
         ) : (
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 10v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71V6.41c0-.89-1.08-1.34-1.71-.71L7 9H4c-.55 0-1 .45-1 1zm13.5 2A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 4.45v.2c0 .38.25.71.6.85C17.18 6.53 19 9.06 19 12s-1.82 5.47-4.4 6.5c-.36.14-.6.47-.6.85v.2c0 .63.63 1.07 1.21.85C18.6 19.11 21 15.84 21 12s-2.4-7.11-5.79-8.4c-.58-.22-1.21.22-1.21.85z"/>
+            <path d="M3 10v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71V6.41c0-.89-1.08-1.34-1.71-.71L7 9H4c-.55 0-1 .45-1 1zm13.5 2A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 4.45v.2c0 .38.25.71.6.85C17.18 6.53 19 9.06 19 12s-1.82 5.47-4.4 6.5c-.36.14-.6.47-.6.85v.2c0 .63.63 1.07 1.21.85C18.6 19.11 21 15.84 21 12s-2.4-7.11-5.79-8.4c-.58-.22-1.21.22-1.21.85z" />
           </svg>
         )}
       </button>
@@ -257,7 +260,9 @@ function LightVideo({
           />
         ) : (
           <div className="absolute inset-0 bg-muted/20 flex items-center justify-center">
-            <div className="text-muted-foreground text-sm">Video unavailable</div>
+            <div className="text-muted-foreground text-sm">
+              Video unavailable
+            </div>
           </div>
         )}
       </div>
@@ -333,11 +338,11 @@ function LightVideo({
         >
           {isMuted ? (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M3.63 3.63a.996.996 0 0 0-1.41 1.41L7.29 10.1 7 10.38V20c0 .55.45 1 1 1h.01c.2 0 .39-.08.54-.22L12 17.32V21c0 .55.45 1 1 1s1-.45 1-1v-8.68l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.56-.77 2.24-1.31l1.58 1.58a.996.996 0 1 0 1.41-1.41L3.63 3.63zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-3.83-2.4-7.11-5.78-8.4-.59-.23-1.22.23-1.22.86v.19c0 .38.25.71.61.85C17.18 6.54 19 9.06 19 12zm-8.71-6.29L10.05 6l-.01.01L8.59 7.46c-.31.31-.76.45-1.16.32C7.08 7.66 6.75 7.34 6.75 7V5c0-.55.45-1 1-1 .2 0 .39.08.54.22z"/>
+              <path d="M3.63 3.63a.996.996 0 0 0-1.41 1.41L7.29 10.1 7 10.38V20c0 .55.45 1 1 1h.01c.2 0 .39-.08.54-.22L12 17.32V21c0 .55.45 1 1 1s1-.45 1-1v-8.68l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.56-.77 2.24-1.31l1.58 1.58a.996.996 0 1 0 1.41-1.41L3.63 3.63zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-3.83-2.4-7.11-5.78-8.4-.59-.23-1.22.23-1.22.86v.19c0 .38.25.71.61.85C17.18 6.54 19 9.06 19 12zm-8.71-6.29L10.05 6l-.01.01L8.59 7.46c-.31.31-.76.45-1.16.32C7.08 7.66 6.75 7.34 6.75 7V5c0-.55.45-1 1-1 .2 0 .39.08.54.22z" />
             </svg>
           ) : (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M3 10v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71V6.41c0-.89-1.08-1.34-1.71-.71L7 9H4c-.55 0-1 .45-1 1zm13.5 2A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 4.45v.2c0 .38.25.71.6.85C17.18 6.53 19 9.06 19 12s-1.82 5.47-4.4 6.5c-.36.14-.6.47-.6.85v.2c0 .63.63 1.07 1.21.85C18.6 19.11 21 15.84 21 12s-2.4-7.11-5.79-8.4c-.58-.22-1.21.22-1.21.85z"/>
+              <path d="M3 10v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71V6.41c0-.89-1.08-1.34-1.71-.71L7 9H4c-.55 0-1 .45-1 1zm13.5 2A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 4.45v.2c0 .38.25.71.6.85C17.18 6.53 19 9.06 19 12s-1.82 5.47-4.4 6.5c-.36.14-.6.47-.6.85v.2c0 .63.63 1.07 1.21.85C18.6 19.11 21 15.84 21 12s-2.4-7.11-5.79-8.4c-.58-.22-1.21.22-1.21.85z" />
             </svg>
           )}
         </button>
@@ -383,11 +388,7 @@ function MediaFrame({ media, title }: { media?: Media; title: string }) {
 
   if (media.type === "youtube" && media.youtubeId) {
     return (
-      <YouTubeEmbed
-        youtubeId={media.youtubeId}
-        title={title}
-        format={format}
-      />
+      <YouTubeEmbed youtubeId={media.youtubeId} title={title} format={format} />
     );
   }
 
@@ -419,7 +420,7 @@ const testimonials: Testimonial[] = [
       type: "youtube",
       youtubeId: "PYR3zh_TFiY",
       format: "portrait",
-      src: ""
+      src: "",
     },
   },
   {
@@ -440,7 +441,7 @@ const testimonials: Testimonial[] = [
     content:
       "As a food lover, the wellness retreat helped me realize that it's not just about eating, but about choosing the right food for a healthier and mindful life. I discovered that Satvik food is all we truly need to stay energetic and balanced.",
     author: "Ankit Garg",
-    role: "Operation Manager",
+    role: "Operations Manager",
     company: "GMR Infrastructure",
     rating: 5,
     avatar: "AG",
@@ -453,23 +454,23 @@ const testimonials: Testimonial[] = [
   {
     content:
       "Our corporate team came back energized and more collaborative than ever. The leadership workshops and team-building activities were perfectly designed for our goals.",
-    author: "Rajesh Kumar",
+    author: "Jigyasa Saxena",
     role: "VP Operations",
-    company: "Manufacturing Co.",
+    company: "Google",
     rating: 5,
-    avatar: "RK",
+    avatar: "/testimonials/6.jpg",
   },
   {
-    author: "Meenakshi Bansal",
-    role: "Manager, Human Capital - KKR",
+    author: "Anil Grag",
+    role: "Mumbai, India",
     rating: 5,
-    avatar: "MB",
-    trip: "Almaty & Astana, Kazakhstan",
+    avatar: "AG",
+    trip: "Rishikesh, India",
     content:
-      "Exploring Kazakhstan with Traveon was an unforgettable experience. From the bustling markets of Almaty to the futuristic skyline of Astana, every moment was filled with wonder and discovery. The local guides were incredibly knowledgeable and made us feel at home.",
+      "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for. The ashram setting by the Ganges was perfect.",
     media: {
       type: "image",
-      src: "/testimonials/5.jpg",
+      src: "/testimonials/ag.jpg",
       format: "landscape",
     },
   },
@@ -477,7 +478,7 @@ const testimonials: Testimonial[] = [
     content:
       "The session was absolutely amazing. I had a great time experiencing the vibrations. I felt it all over my body. Even though it was midday on a workday, this helped me unwind for thirty minutes. I'm really grateful!",
     author: "Lokesh",
-    role: "Google", 
+    role: "Google",
     company: "Gurugram",
     rating: 5,
     avatar: "L",
@@ -485,7 +486,7 @@ const testimonials: Testimonial[] = [
       type: "youtube",
       youtubeId: "oyBmIPONT-0",
       format: "portrait",
-      src: ""
+      src: "",
     },
   },
 ];
@@ -509,17 +510,30 @@ export function Testimonials() {
     <section className="py-24 bg-background">
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-            <Star className="w-4 h-4 mr-2 fill-current" />
-            Guest Stories
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+            <Star className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 fill-current flex-shrink-0" />
+            <span>Guest Stories</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-            Voices of <span className="text-gradient">Transformation</span>
+
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold mb-3 sm:mb-4 lg:mb-6 leading-tight">
+            <span className="block sm:inline">Voices of </span>
+            <span className="text-gradient">Transformation</span>
           </h2>
-          <p className="text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-            Real experiences from guests who found renewal, teams that
-            discovered synergy, and travelers who connected with purpose.
+
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted max-w-xs sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto leading-relaxed">
+            <span className="block sm:hidden">
+              Real stories from guests who found renewal and teams that
+              discovered synergy.
+            </span>
+            <span className="hidden sm:block md:hidden">
+              Real experiences from guests who found renewal and teams that
+              discovered synergy.
+            </span>
+            <span className="hidden md:block">
+              Real experiences from guests who found renewal, teams that
+              discovered synergy, and travelers who connected with purpose.
+            </span>
           </p>
         </div>
 
@@ -529,7 +543,7 @@ export function Testimonials() {
             const hasMedia = !!t.media;
             return (
               <Card
-                key={`testimonial-${index}-${t.author.replace(/\s+/g, '-').toLowerCase()}`}
+                key={`testimonial-${index}-${t.author.replace(/\s+/g, "-").toLowerCase()}`}
                 className="relative p-8 shadow-card hover:shadow-floating transition-spring bg-gradient-to-br from-background to-primary/5 border-0 mb-8 break-inside-avoid"
               >
                 {/* Hide quote if media exists to avoid overlay */}
@@ -564,10 +578,25 @@ export function Testimonials() {
                   </blockquote>
 
                   {/* Author */}
+                  {/* Author */}
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-white font-semibold">
-                      {t.avatar}
-                    </div>
+                    {t.avatar.includes("/") ? (
+                      // If avatar is an image path
+                      <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+                        <Image
+                          src={t.avatar}
+                          alt={t.author}
+                          width={48}
+                          height={48}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                    ) : (
+                      // If avatar is initials
+                      <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-white font-semibold">
+                        {t.avatar}
+                      </div>
+                    )}
                     <div>
                       <div className="font-semibold text-foreground">
                         {t.author}

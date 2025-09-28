@@ -439,7 +439,7 @@ export default function CorporateRetreatsPage() {
             <div className="mt-12 grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="text-3xl font-bold text-[#F6B93B] mb-2">
-                  500+
+                  50+
                 </div>
                 <div className="text-white/80">Successful Retreats</div>
               </div>
@@ -451,7 +451,7 @@ export default function CorporateRetreatsPage() {
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-[#F6B93B] mb-2">
-                  50+
+                  15+
                 </div>
                 <div className="text-white/80">Destinations</div>
               </div>

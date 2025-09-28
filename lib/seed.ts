@@ -31,7 +31,7 @@ export type Package = {
   category: RetreatCategory;
   summary: string;
   location: string;
-  duration: number;
+  duration: number | string;
   basePrice: number;
   currency?: string;
   heroImage: string;
@@ -246,6 +246,222 @@ export const seedPackages: Package[] = [
     ],
     partner: "Arunanand Saraswati",
     partnerLogo: "/rishikesh/anantam.jpg",
+  },
+
+  // --- Nirvana Inner Journey ---
+
+  {
+    id: "nirvana-naad-wellness-4d",
+    slug: "nirvana-inner-journey-naad-wellness",
+    title: "Nirvana — Inner Journey Meditation & Healing",
+    category: "Wellness",
+    summary:
+      "A 4-day retreat at Naad Wellness Sonipat led by Anant Gogia, blending yoga, sound healing, Mystic Rose meditation, and relaxation therapies.",
+    location: "Naad Wellness Sonipat, Haryana, India",
+    duration: 4,
+    basePrice: 28000, // Double occupancy as base price
+    currency: "INR",
+    heroImage: "/nirvana/1.jpg",
+    gallery: ["/nirvana/2.jpg", "/nirvana/3.jpg", "/nirvana/4.jpg"],
+    highlights: [
+      "Daily yoga, pranayama & deep relaxation",
+      "Special Mystic Rose Meditation for emotional healing",
+      "2 Sound Healing sessions in nature",
+      "Nights with music, dance & storytelling",
+      "Delicious vegetarian meals",
+      "Naad wellness activities",
+    ],
+    amenities: [
+      "Nature-facing rooms",
+      "Sattvic meals",
+      "Group activities",
+      "Naad activities",
+      "Relaxation therapies",
+    ],
+    focusTags: [
+      "meditation",
+      "theta healing",
+      "sound therapy",
+      "spiritual growth",
+      "emotional healing",
+    ],
+    inclusions: [
+      "3 nights stay",
+      "All meals (vegetarian)",
+      "Daily yoga & meditation",
+      "2 sound healing sessions",
+      "Naad Activities",
+      "Relaxation therapies",
+      "Group ceremonies",
+    ],
+    exclusions: [
+      "Personal therapies",
+      "Flights",
+      "Additional personal expenses",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival & Grounding",
+        description:
+          "Arrival, grounding meditation, intention ceremony, yoga, vegetarian dinner, starry night music & optional Yoga Nidra.",
+        meals: { dinner: true },
+      },
+      {
+        day: 2,
+        title: "Mystic Rose Meditation & Healing",
+        description:
+          "Yoga, Mystic Rose Meditation, sound healing, Yoga Nidra, and a magical night of storytelling, music, and dance under the stars.",
+        meals: { breakfast: true, lunch: true, dinner: true },
+      },
+      {
+        day: 3,
+        title: "Naad & Sound Healing",
+        description:
+          "Yoga, Naad activities at the resort, deep rest, and indoor sound healing for inner balance.",
+        meals: { breakfast: true, lunch: true, dinner: true },
+      },
+      {
+        day: 4,
+        title: "Departure & Closure",
+        description:
+          "Gratitude meditation, light breakfast, closing circle, and heartfelt goodbyes by noon.",
+        meals: { breakfast: true },
+      },
+    ],
+    departures: [
+      {
+        startDate: "2025-11-27",
+        endDate: "2025-11-30",
+        availability: "Available",
+        price: 40000, // Single occupancy price
+        ctaLabel: "Single Occupancy",
+        isFeatured: true,
+      },
+      {
+        startDate: "2025-11-27",
+        endDate: "2025-11-30",
+        availability: "Available",
+        price: 28000, // Double occupancy price
+        ctaLabel: "Double Occupancy",
+      },
+    ],
+    leaders: [
+      {
+        name: "Anant Gogia",
+        bio: "Certified Theta Meditation Instructor, Past Life Regression Therapist, Sound Healer, Tarot & Astrology teacher.",
+        image: "/anant/anant.jpg",
+        expertise: [
+          "Theta Meditation",
+          "Past Life Regression",
+          "Tarot & Astrology",
+          "Sound Healing",
+        ],
+      },
+    ],
+    partner: "Anant Gogia",
+    partnerLogo: "/anant/partnerlogo.jpg",
+    isFeatured: true,
+  },
+
+  // --- 2 hrs Onsite healing session ---
+
+  {
+    id: "corporate-sound-healing-2hr",
+    slug: "corporate-sound-healing-workshop",
+    title: "2 Hrs Onsite Sound Healing Workshop for Corporates",
+    category: "Wellness",
+    summary:
+      "A 2-hour onsite Sound Healing corporate wellness workshop designed to reduce stress, reset the nervous system, and elevate team well-being through powerful vibrational therapy.",
+    location: "Delhi, Gurgaon, Noida, Faridabad, India",
+    duration: "2 hours", 
+    basePrice: 3000,
+    currency: "INR",
+    heroImage: "/2hrs/1.jpg",
+    gallery: ["/2hrs/3.jpg", "/2hrs/2.jpg"],
+    highlights: [
+      "Happier, more motivated employees",
+      "Stronger team bonding and improved workplace culture",
+      "Increased concentration and energy at work",
+      "Help to improve commitment towards its people and clients",
+      "Onsite convenience at your office location",
+    ],
+    amenities: [
+      "Onsite session at your office",
+      "All sound healing instruments",
+      "Expert facilitators",
+      "Group wellness activity",
+    ],
+    focusTags: [
+      "corporate wellness",
+      "stress reduction",
+      "team building",
+      "sound therapy",
+      "workplace wellbeing",
+    ],
+    inclusions: [
+      "15 Min knowledge session",
+      "Sound Bath Therapy",
+      "Deep Cleansing meditation",
+      "All equipment and materials",
+      "Expert facilitation by certified trainers",
+    ],
+    exclusions: [
+      "Venue arrangement",
+      "Travel beyond service areas",
+      "Additional customization fees",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Sound Healing Workshop",
+        description:
+          "2-hour onsite session including 15-minute knowledge session, Sound Bath Therapy, deep cleansing meditation, and vibrational healing experience.",
+        activities: [
+          "Introduction to Sound Healing",
+          "Breathing exercises & grounding",
+          "Sound Bath immersion",
+          "Deep cleansing meditation",
+          "Group sharing & integration",
+        ],
+      },
+    ],
+    departures: [
+      {
+        startDate: "2025-12-01", // Dummy date for display
+        endDate: "2025-12-01",
+        availability: "Available",
+        ctaLabel: "Inquire for Dates",
+        isFeatured: true,
+      },
+    ],
+    leaders: [
+      {
+        name: "Anant Gogia",
+        bio: "Certified Theta Meditation Instructor, Past Life Regression Therapist, Sound Healer, Tarot & Astrology teacher.",
+        image: "/anant/anant.jpg",
+        expertise: [
+          "Theta Meditation",
+          "Sound Healing",
+          "Corporate Wellness",
+          "Stress Management",
+        ],
+      },
+      {
+        name: "Arunanand Saraswati",
+        bio: "Spiritual practitioner, energy healer, Reiki Grand Master, Lama Fera practitioner, and author of 'Transform Lives with Energy Healing'.",
+        image: "/rishikesh/arunanand.jpg",
+        expertise: [
+          "Energy Healing",
+          "Sound Therapy",
+          "Corporate Retreats",
+          "Team Wellness",
+        ],
+      },
+    ],
+    partner: "Retreats by Traveon",
+    partnerLogo: "/logo/logo-sq.jpg",
+    isFeatured: true,
   },
 
   // --- Seychelles Group Tour ---

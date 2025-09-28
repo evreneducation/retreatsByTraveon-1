@@ -34,7 +34,7 @@ export function ContactForm() {
   });
 
   const onSubmit = (data: FormData) => {
-    const whatsappNumber = "919540111307"; // Your WhatsApp number with country code
+    const whatsappNumber = "919540111307"; 
 
     const messageLines = [
       `*New Retreat Inquiry*`,

@@ -21,7 +21,10 @@ export function PackageCard({ pkg }: { pkg: Package }) {
         <h3 className="text-lg font-semibold">{pkg.title}</h3>
         <p className="text-sm text-ink/70 mt-1">{pkg.location}</p>
         <p className="text-sm mt-1">
-          {pkg.duration} days • From ₹{pkg.basePrice}
+          {typeof pkg.duration === "string"
+            ? pkg.duration
+            : `${pkg.duration} days`}{" "}
+          • From ₹{pkg.basePrice}
         </p>
         <div className="mt-4 flex gap-3">
           <Button asChild size="sm">

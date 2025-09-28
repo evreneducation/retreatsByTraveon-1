@@ -1,52 +1,105 @@
 "use client";
 import React from "react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { PageHeader } from "@/components/site/PageHeader";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50">
+      {/* Full-width Video Banner - No Black Borders */}
+      <div className="relative w-full h-[60vh] min-h-[500px] max-h-[800px] overflow-hidden">
+        {/* Video Container - Full Width with No Borders */}
+        <div className="absolute inset-0 w-full h-full">
+          <div className="w-full h-full relative">
+            <iframe
+              src="https://www.youtube.com/embed/2IIWjCN-LZs?autoplay=1&mute=1&loop=1&playlist=2IIWjCN-LZs&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1"
+              className="absolute top-1/2 left-1/2 w-[178%] h-[178%] transform -translate-x-1/2 -translate-y-1/2 min-w-[100vw] min-h-[100vh]"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Traveon Retreats Experience"
+              style={{
+                aspectRatio: '16/9'
+              }}
+            />
+          </div>
+        </div>
+        
+        {/* Dark Overlay for Better Text Readability */}
+        <div className="absolute inset-0 bg-black/30" />
+        
+        {/* Content Overlay */}
+        <div className="relative z-10 h-full flex items-center justify-center text-center">
+          <div className="text-white max-w-4xl mx-auto px-6">
+            <div className="inline-block mb-4">
+              <span className="bg-gradient-to-r from-blue-300 to-green-300 bg-clip-text text-transparent font-semibold text-lg sm:text-xl lg:text-3xl tracking-wide">
+                THE EXPERIENCES ARM OF TRAVEON VENTURES
+              </span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+              Relax Reconnect Reset
+            </h1>
+            
+          </div>
+        </div>
+      </div>
+
       <div className="container py-12">
-        <PageHeader
-          title="About Retreats by Traveon"
-          subtitle="Where Connection Meets Purpose"
-        />
-
-        {/* Hero Section with Animation */}
-        <div className="relative overflow-hidden rounded-3xl bg-white/80 backdrop-blur-sm shadow-2xl mb-16">
-          {/* Subtle gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-green-500/10 to-purple-600/10" />
-
-          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 p-6 sm:p-10 lg:p-16">
-            {/* Left Content */}
-            <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">
-              <div className="inline-block">
-                <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent font-semibold text-sm sm:text-base lg:text-lg tracking-wide">
-                  THE EXPERIENCES ARM OF TRAVEON VENTURES
-                </span>
+        {/* Mission Statement Section with GIF */}
+        <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* GIF Image */}
+            <div className="flex justify-center order-2 lg:order-1">
+              <div className="w-full max-w-lg">
+                <Image
+                  src="/about/about.gif" 
+                  alt="Traveon Retreats Experience"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-2xl shadow-lg"
+                  unoptimized 
+                />
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            </div>
+
+            {/* Content */}
+            <div className="order-1 lg:order-2">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
                 We exist to help people{" "}
                 <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
                   connect
                 </span>
               </h2>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Within themselves, within teams, and within communities through
-                thoughtfully curated experiences that blend local culture,
-                nature, and premium hospitality.
+              <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8">
+                Within themselves, within teams, and within communities through thoughtfully 
+                curated experiences that blend local culture, nature, and premium hospitality.
               </p>
-            </div>
-
-            {/* Right Animation */}
-            <div className="flex items-center justify-center">
-              <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-                <DotLottieReact
-                  src="https://lottie.host/72ce7fc3-d4e2-4c6d-86c6-55aa4a458754/vP13hNoG1q.lottie"
-                  loop
-                  autoplay
-                  className="w-full h-full"
-                />
+              
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-blue-100 rounded-full p-2">
+                    <span className="text-blue-600 text-xl">🌍</span>
+                  </div>
+                  <span className="font-semibold text-gray-900">Global Reach</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="bg-green-100 rounded-full p-2">
+                    <span className="text-green-600 text-xl">✨</span>
+                  </div>
+                  <span className="font-semibold text-gray-900">Premium Quality</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="bg-purple-100 rounded-full p-2">
+                    <span className="text-purple-600 text-xl">🤝</span>
+                  </div>
+                  <span className="font-semibold text-gray-900">Local Partnerships</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="bg-orange-100 rounded-full p-2">
+                    <span className="text-orange-600 text-xl">🎯</span>
+                  </div>
+                  <span className="font-semibold text-gray-900">Purpose-Driven</span>
+                </div>
               </div>
             </div>
           </div>
@@ -171,56 +224,45 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Experience Spectrum */}
-        <div className="bg-white rounded-3xl p-12 shadow-xl mb-16">
+        {/* Experience Journey Section */}
+        <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              From Sunrise to Success
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Your Journey with Traveon
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Whether it's sunrise yoga by the sea or executive strategy
-              sessions, we create experiences that people remember for the right
-              reasons.
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+              From initial planning to unforgettable memories, we guide you through every step
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl p-8 mb-6 transform group-hover:scale-105 transition-transform duration-300">
-                <div className="text-6xl text-white mb-4">🌅</div>
-                <h3 className="text-2xl font-bold text-white">
-                  Wellness Journeys
-                </h3>
+              <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-8 mb-6 transform group-hover:scale-105 transition-transform duration-300">
+                <div className="text-5xl mb-4">📅</div>
+                <h3 className="text-xl font-bold text-gray-900">Plan</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Sunrise yoga, mindfulness practices, and nature therapy designed
-                to rejuvenate body and mind.
+                Collaborative planning with our experts to design your perfect experience
               </p>
             </div>
 
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 mb-6 transform group-hover:scale-105 transition-transform duration-300">
-                <div className="text-6xl text-white mb-4">🏛️</div>
-                <h3 className="text-2xl font-bold text-white">
-                  Cultural Exploration
-                </h3>
+              <div className="bg-gradient-to-br from-green-100 to-green-50 rounded-2xl p-8 mb-6 transform group-hover:scale-105 transition-transform duration-300">
+                <div className="text-5xl mb-4">✈️</div>
+                <h3 className="text-xl font-bold text-gray-900">Experience</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Knowledge-rich community tours that offer deep insights into
-                local traditions and heritage.
+                Immerse yourself in carefully curated activities and local culture
               </p>
             </div>
 
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl p-8 mb-6 transform group-hover:scale-105 transition-transform duration-300">
-                <div className="text-6xl text-white mb-4">📊</div>
-                <h3 className="text-2xl font-bold text-white">
-                  Executive Outcomes
-                </h3>
+              <div className="bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl p-8 mb-6 transform group-hover:scale-105 transition-transform duration-300">
+                <div className="text-5xl mb-4">🌟</div>
+                <h3 className="text-xl font-bold text-gray-900">Transform</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Strategic offsites and large-format meetings that drive team
-                alignment and business results.
+                Return with renewed energy, deeper connections, and lasting memories
               </p>
             </div>
           </div>
@@ -234,8 +276,7 @@ export default function AboutPage() {
                 Built on Trust
               </h2>
               <p className="text-base lg:text-xl text-gray-600 px-4">
-                Our commitment to excellence is reflected in every aspect of our
-                service delivery.
+                Our commitment to excellence is reflected in every aspect of our service delivery
               </p>
             </div>
 
@@ -248,8 +289,7 @@ export default function AboutPage() {
                   Partner Network
                 </h3>
                 <p className="text-sm lg:text-base text-gray-600 px-2">
-                  Trusted on-ground partners who share our commitment to quality
-                  and authenticity.
+                  Trusted on-ground partners who share our commitment to quality and authenticity
                 </p>
               </div>
 
@@ -261,8 +301,7 @@ export default function AboutPage() {
                   Safety Standards
                 </h3>
                 <p className="text-sm lg:text-base text-gray-600 px-2">
-                  Rigorous safety protocols ensuring peace of mind throughout
-                  your journey.
+                  Rigorous safety protocols ensuring peace of mind throughout your journey
                 </p>
               </div>
 
@@ -274,8 +313,7 @@ export default function AboutPage() {
                   Transparent Pricing
                 </h3>
                 <p className="text-sm lg:text-base text-gray-600 px-2">
-                  Clear budgets with no hidden costs—just beautifully run
-                  experiences.
+                  Clear budgets with no hidden costs—just beautifully run experiences
                 </p>
               </div>
             </div>

@@ -134,7 +134,7 @@ const sampleTestimonials: Testimonial[] = [
     avatar: "/testimonials/5.jpg",
     rating: 5,
     review:
-      "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for. The ashram setting by the Ganges was perfect.",
+      "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for.",
     packageTitle: "Nirvana — Anantam a Holistic Wellness Retreat",
     travelDate: "October 2024",
     verified: true,

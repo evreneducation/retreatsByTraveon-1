@@ -59,7 +59,7 @@ export function WhyChooseUs() {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-            Why <span className="text-gradient">Traveon</span>
+            Why <span className="text-gradient">Retreats By Traveon</span>
           </h2>
           <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
             Five years of creating transformative experiences, with deep local
@@ -97,7 +97,7 @@ export function WhyChooseUs() {
         <div className="mt-20 text-center">
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-primary text-white font-medium">
             <Award className="w-5 h-5 mr-2" />
-            Trusted by 50+ corporations and 2,500+ individual travelers
+            Trusted by 50+ corporations and 20+ individual travelers
           </div>
         </div>
       </div>

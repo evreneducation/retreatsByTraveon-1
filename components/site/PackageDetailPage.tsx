@@ -116,7 +116,11 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>{pkg.duration} Days</span>
+                <span>
+                  {typeof pkg.duration === "string"
+                    ? pkg.duration
+                    : `${pkg.duration} Days`}
+                </span>
               </div>
               <div className="text-lg sm:text-2xl font-bold">
                 From {formatPrice(pkg.basePrice, pkg.currency)}

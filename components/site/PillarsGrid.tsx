@@ -29,7 +29,6 @@ const pillars = [
     images: [
       "/wellness-retreats/21.jpg",
       "/wellness-retreats/22.jpg",
-      "/wellness-retreats/20.jpg",
       "/wellness-retreats/40.webp",
     ],
     href: "/retreats/wellness",
@@ -93,7 +92,12 @@ const pillars = [
     ],
     icon: Users,
     image: "/mice-tours/1.jpg",
-    images: ["/mice-tours/1.jpg", "/mice-tours/2.jpg", "/mice-tours/3.jpg", "/mice-tours/4.jpg"],
+    images: [
+      "/mice-tours/1.jpg",
+      "/mice-tours/2.jpg",
+      "/mice-tours/3.jpg",
+      "/mice-tours/4.jpg",
+    ],
     href: "/tours/mice",
     color: "text-primary",
     gradient: "from-primary/20 to-primary/5",
@@ -158,12 +162,16 @@ function PillarCard({ pillar }: { pillar: (typeof pillars)[number] }) {
         <Button
           variant="outline"
           size="lg"
-          className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-smooth"
+          className="w-full px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-medium group-hover:bg-primary group-hover:text-primary-foreground transition-smooth shadow-md hover:shadow-lg"
           asChild
         >
-          <Link href={pillar.href}>
-            Explore {pillar.title}
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          <Link href={pillar.href} className="flex items-center justify-center">
+            <span className="block sm:hidden">Explore</span>
+            <span className="hidden sm:block md:hidden">
+              Explore {pillar.title.split(" ")[0]}
+            </span>
+            <span className="hidden md:block">Explore {pillar.title}</span>
+            <ArrowRight className="ml-1.5 sm:ml-2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
           </Link>
         </Button>
       </CardContent>
@@ -173,7 +181,7 @@ function PillarCard({ pillar }: { pillar: (typeof pillars)[number] }) {
 
 export function PillarsGrid() {
   return (
-    <>
+    <div id="pillar-grid">
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
           Four Paths to <span className="text-gradient">Rejuvenation</span>
@@ -190,15 +198,26 @@ export function PillarsGrid() {
         ))}
 
         {/* Bottom CTA */}
-        <div className="md:col-span-2 text-center mt-16">
-          <Button variant="hero" size="lg" asChild>
-            <Link href="/contact">
-              Start Planning Your Experience
-              <ArrowRight className="ml-2 h-5 w-5" />
+        <div className="md:col-span-2 text-center mt-8 sm:mt-12 md:mt-16 px-4 sm:px-6">
+          <Button
+            variant="hero"
+            size="lg"
+            asChild
+            className="w-full sm:w-auto sm:min-w-[280px] md:min-w-[320px] lg:min-w-[360px] px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-medium shadow-xl hover:shadow-2xl transition-all duration-300"
+          >
+            <Link href="/contact" className="flex items-center justify-center">
+              <span className="block sm:hidden">Start Planning</span>
+              <span className="hidden sm:block md:hidden">
+                Plan Your Experience
+              </span>
+              <span className="hidden md:block">
+                Start Planning Your Experience
+              </span>
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
