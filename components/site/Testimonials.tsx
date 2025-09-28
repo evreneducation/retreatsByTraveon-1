@@ -6,14 +6,14 @@ import { Star, Quote } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-/* ---------------- Types ---------------- */
+
 
 type Media = {
   type: "video" | "image" | "youtube";
   src: string; // /testimonials/1.mp4 OR /assets/...jpg OR YouTube embed URL
   poster?: string; // optional poster for video (or image fallback)
   format?: "portrait" | "landscape"; // portrait = 9:16, landscape = 16:9
-  autoplayOnView?: boolean; // 👈 new: autoplay when card is visible
+  autoplayOnView?: boolean; // 
   loop?: boolean; // optional: loop video (default true)
   youtubeId?: string; // YouTube video ID for embedded videos
 };
