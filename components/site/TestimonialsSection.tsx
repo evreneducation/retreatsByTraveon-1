@@ -18,7 +18,11 @@ interface Testimonial {
   travelDate: string;
   verified: boolean;
   videoUrl?: string;
-  type?: 'text' | 'video';
+  type?: "text" | "video";
+  company?: string;
+  role?: string;
+  employees?: string;
+  packageIds?: string[]; // Add packageIds to specify which packages this testimonial belongs to
 }
 
 interface LightVideoProps {
@@ -32,14 +36,14 @@ interface LightVideoProps {
 }
 
 // LightVideo Component
-function LightVideo({ 
-  src, 
-  autoplayOnView = false, 
+function LightVideo({
+  src,
+  autoplayOnView = false,
   className = "",
   controls = true,
   muted = true,
   loop = false,
-  poster
+  poster,
 }: LightVideoProps) {
   const [playing, setPlaying] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -96,10 +100,10 @@ function LightVideo({
           preload="metadata"
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
-          onError={(e) => console.error('Video error:', e)}
+          onError={(e) => console.error("Video error:", e)}
         />
       )}
-      
+
       {/* Play/Pause Overlay */}
       {!controls && (
         <button
@@ -113,10 +117,10 @@ function LightVideo({
           )}
         </button>
       )}
-      
+
       {/* Fallback for when video is not loaded */}
       {!playing && !autoplayOnView && poster && (
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center rounded-lg"
           style={{ backgroundImage: `url(${poster})` }}
         />
@@ -127,8 +131,9 @@ function LightVideo({
 
 // Sample testimonials - you can replace with real data
 const sampleTestimonials: Testimonial[] = [
+  // Phool Chatti - Arunanand - Only Meenakshi Bansal
   {
-    id: "1",
+    id: "phool-chatti-1",
     name: "Meenakshi Bansal",
     location: "Mumbai, India",
     avatar: "/testimonials/5.jpg",
@@ -136,10 +141,42 @@ const sampleTestimonials: Testimonial[] = [
     review:
       "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for.",
     packageTitle: "Nirvana — Anantam a Holistic Wellness Retreat",
-    travelDate: "October 2024",
+    travelDate: "27-30 Nov 2025",
     verified: true,
-    type: 'text'
+    type: "text",
+    packageIds: ["nirvana-arunanand-4d"] // Only for Phool Chatti package
   },
+  // Naad Wellness - Anant - Only Arun Jain
+  {
+    id: "naad-wellness-1",
+    name: "Arun Jain",
+    location: "Pune, India",
+    avatar: "/testimonials/2.jpg",
+    rating: 4,
+    review:
+      "During the wellness retreat, I discovered a new sense of energy and positivity all around me. By practicing mindfulness daily, I now feel calmer, healthier, and more balanced in life.",
+    packageTitle: "Nirvana — Inner Journey Meditation & Healing",
+    travelDate: "27-30 Nov 2025",
+    verified: true,
+    type: "text",
+    packageIds: ["nirvana-naad-wellness-4d"] // Only for Naad Wellness package
+  },
+  // Tapovan Rishikesh - Anant - Only Arun Jain (different testimonial)
+  {
+    id: "tapovan-1",
+    name: "Arun Jain",
+    location: "Pune, India",
+    avatar: "/testimonials/2.jpg",
+    rating: 5,
+    review:
+      "The Himalayan retreat experience was incredible. The combination of yoga, meditation, and sound healing in the mountains created a perfect environment for self-discovery and inner peace.",
+    packageTitle: "Nirvana — Inner Journey Meditation & Healing",
+    travelDate: "December 2024",
+    verified: true,
+    type: "text",
+    packageIds: ["nirvana-anant-4d"] // Only for Tapovan Rishikesh package
+  },
+  // Magical Muscat
   {
     id: "2",
     name: "Aditya Kumar",
@@ -151,8 +188,9 @@ const sampleTestimonials: Testimonial[] = [
     packageTitle: "Magical Muscat — 5 Days / 4 Nights",
     travelDate: "November 2024",
     verified: true,
-    type: 'video'
+    type: "video",
   },
+  // Seychelles
   {
     id: "3",
     name: "Anil Kumar",
@@ -164,20 +202,40 @@ const sampleTestimonials: Testimonial[] = [
     packageTitle: "Seychelles — Fixed Departure Group Tour",
     travelDate: "October 2024",
     verified: true,
-    type: 'text'
+    type: "text",
+  },
+  // Corporate Sound Healing Testimonials
+  {
+    id: "corp-1",
+    name: "Lokesh",
+    location: "Gurgaon, India",
+    avatar: "/testimonials/10.png",
+    rating: 5,
+    review:
+      "The session was absolutely amazing. I had a great time experiencing the vibrations. I felt it all over my body. Even though it was midday on a workday, this helped me unwind for thirty minutes. I'm really grateful!",
+    packageTitle: "2 Hrs Onsite Sound Healing Workshop for Corporates",
+    travelDate: "",
+    verified: true,
+    type: "text",
+    company: "Google",
+    role: "Employee",
+    employees: "",
   },
   {
-    id: "4",
-    name: "Arun Jain",
-    location: "Pune, India",
-    avatar: "/testimonials/2.jpg",
-    rating: 4,
+    id: "corp-2",
+    name: "Jigyasa Saxena",
+    location: "Delhi, India",
+    avatar: "/testimonials/6.jpg",
+    rating: 5,
     review:
-      "During the wellness retreat, I discovered a new sense of energy and positivity all around me. By practicing mindfulness daily, I now feel calmer, healthier, and more balanced in life.",
-    packageTitle: "Nirvana — Inner Journey Meditation & Healing",
-    travelDate: "December 2024",
+      "Our corporate team came back energized and more collaborative than ever. The leadership workshops and team-building activities were perfectly designed for our goals.",
+    packageTitle: "2 Hrs Onsite Sound Healing Workshop for Corporates",
+    travelDate: "",
     verified: true,
-    type: 'text'
+    type: "text",
+    company: "Google",
+    role: "VP Operations",
+    employees: "",
   },
 ];
 
@@ -194,9 +252,23 @@ export function TestimonialsSection({
 }: TestimonialsSectionProps) {
   // Filter testimonials by package if specified
   const filteredTestimonials = packageId
-    ? sampleTestimonials.filter((t) =>
-        t.packageTitle.toLowerCase().includes(packageId.toLowerCase())
-      )
+    ? sampleTestimonials.filter((t) => {
+        // First check if testimonial has specific packageIds
+        if (t.packageIds && t.packageIds.length > 0) {
+          return t.packageIds.includes(packageId);
+        }
+        
+        // Fallback to package title matching for packages without specific IDs
+        return (
+          t.packageTitle.toLowerCase().includes(packageId.toLowerCase()) ||
+          (packageId.toLowerCase().includes("2hr") &&
+            t.id.startsWith("corp-")) ||
+          (packageId.toLowerCase().includes("corporate") &&
+            t.id.startsWith("corp-")) ||
+          (packageId.toLowerCase().includes("sound") &&
+            t.id.startsWith("corp-"))
+        );
+      })
     : sampleTestimonials;
 
   const displayTestimonials = filteredTestimonials.slice(0, limit);
@@ -212,12 +284,25 @@ export function TestimonialsSection({
     ));
   };
 
+  // Check if we're showing corporate testimonials
+  const isCorporatePackage =
+    packageId &&
+    (packageId.toLowerCase().includes("2hr") ||
+      packageId.toLowerCase().includes("corporate") ||
+      packageId.toLowerCase().includes("sound"));
+
   return (
     <div className={className}>
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4">What Our Travelers Say</h2>
+        <h2 className="text-3xl font-bold mb-4">
+          {isCorporatePackage
+            ? "What Our Corporate Clients Say"
+            : "What Our Travelers Say"}
+        </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Real experiences from real people who have traveled with us
+          {isCorporatePackage
+            ? "Real experiences from companies that have transformed their workplace wellness"
+            : "Real experiences from real people who have traveled with us"}
         </p>
       </div>
 
@@ -229,10 +314,10 @@ export function TestimonialsSection({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Card className="h-full hover:shadow-lg transition-shadow">
+            <Card className="h-full hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
               <CardContent className="p-6">
                 {/* Video Testimonial */}
-                {testimonial.type === 'video' && testimonial.videoUrl && (
+                {testimonial.type === "video" && testimonial.videoUrl && (
                   <div className="mb-4 h-48 relative rounded-lg overflow-hidden">
                     <LightVideo
                       src={testimonial.videoUrl}
@@ -246,7 +331,7 @@ export function TestimonialsSection({
                 )}
 
                 {/* Quote Icon for text testimonials */}
-                {testimonial.type !== 'video' && (
+                {testimonial.type !== "video" && (
                   <div className="mb-4">
                     <Quote className="h-8 w-8 text-blue-500 opacity-60" />
                   </div>
@@ -268,8 +353,13 @@ export function TestimonialsSection({
                     {testimonial.packageTitle}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">
-                    Traveled in {testimonial.travelDate}
+                    {testimonial.travelDate}
                   </div>
+                  {testimonial.employees && (
+                    <div className="text-xs text-green-600 font-medium mt-1">
+                      {testimonial.employees}
+                    </div>
+                  )}
                 </div>
 
                 {/* User Info */}
@@ -283,7 +373,7 @@ export function TestimonialsSection({
                       onError={(e) => {
                         // Fallback for broken images
                         const target = e.target as HTMLImageElement;
-                        target.src = '/fallback-avatar.png';
+                        target.src = "/fallback-avatar.png";
                       }}
                     />
                   </div>
@@ -304,6 +394,11 @@ export function TestimonialsSection({
                     <div className="text-xs text-muted-foreground">
                       {testimonial.location}
                     </div>
+                    {testimonial.company && testimonial.role && (
+                      <div className="text-xs text-blue-600 font-medium">
+                        {testimonial.role}, {testimonial.company}
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -326,7 +421,11 @@ export function TestimonialsSection({
         <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground flex-wrap">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-            <span>500+ Happy Travelers</span>
+            <span>
+              {isCorporatePackage
+                ? "50+ Companies Served"
+                : "500+ Happy Travelers"}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -336,8 +435,38 @@ export function TestimonialsSection({
             <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
             <span>100% Verified Reviews</span>
           </div>
+          {isCorporatePackage && (
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+              <span>2,000+ Employees Impacted</span>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Corporate Stats Section */}
+      {isCorporatePackage && (
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="bg-blue-50 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-blue-600">95%</div>
+            <div className="text-sm text-gray-600 mt-2">
+              Employee Satisfaction
+            </div>
+          </div>
+          <div className="bg-green-50 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-green-600">50+</div>
+            <div className="text-sm text-gray-600 mt-2">Companies Served</div>
+          </div>
+          <div className="bg-purple-50 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-purple-600">100%</div>
+            <div className="text-sm text-gray-600 mt-2">Repeat Clients</div>
+          </div>
+          <div className="bg-orange-50 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-orange-600">2K+</div>
+            <div className="text-sm text-gray-600 mt-2">Employees Impacted</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

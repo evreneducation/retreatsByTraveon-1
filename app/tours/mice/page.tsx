@@ -19,6 +19,7 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import { CrossfadeCarousel } from "@/components/shared/CrossfadeCarousel";
 import type { MediaItem } from "@/components/shared/CrossfadeCarousel";
+import Image from "next/image";
 
 export default function MicePage() {
   const whatsappUrl =
@@ -57,7 +58,8 @@ export default function MicePage() {
             <span className="text-[#F6B93B]">Tours</span>
           </h1>
           <p className="mt-3 text-base sm:text-lg md:text-xl text-white/90 font-body drop-shadow">
-            Seamlessly planned Meetings, Incentives, Conferences, and Exhibitions that blend professional goals with memorable travel.
+            Seamlessly planned Meetings, Incentives, Conferences, and
+            Exhibitions that blend professional goals with memorable travel.
           </p>
           <div className="mt-6 flex justify-center">
             <a
@@ -286,6 +288,8 @@ export default function MicePage() {
       </section>
 
       {/* Testimonials Section */}
+      {/* Testimonials Section */}
+      {/* Testimonials Section */}
       <section className="py-20 bg-white">
         <div className="container">
           <div className="text-center mb-16">
@@ -295,18 +299,66 @@ export default function MicePage() {
           </div>
           <div className="grid lg:grid-cols-3 gap-8">
             {[
-              "As a food lover, the wellness retreat helped me realize that it's not just about eating, but about choosing the right food for a healthier and mindful life. I discovered that Satvik food is all we truly need to stay energetic and balanced.",
-              "Our corporate team came back energized and more collaborative than ever. The sound healing and meditation sessions were highly relaxing.",
-              "Every detail was managed professionally, making our conference-tour a truly memorable experience for all participants.",
+              {
+                quote:
+                  "Our MICE tour with Traveon was flawless. We combined business meetings, team bonding, and cultural exploration seamlessly.",
+                name: "Naveen Kumar",
+                company: "Rahat Trust",
+                avatar: "/testimonials/7.png",
+              },
+              {
+                quote:
+                  "Every detail was managed professionally, making the award function and MICE tour a truly memorable experience for all participants.",
+                name: "Archit Singla",
+                company: "Director, Nuwud",
+                avatar: "/testimonials/9.png",
+              },
+              {
+                quote:
+                  "Attending IBIEA 2025 in Oman was an incredible experience. The atmosphere, the people, and the recognition of true talent made it a night to remember.",
+                name: "Pascal Esparon",
+                company: "Escape Seychelles",
+                avatar: "/testimonials/8.png",
+              },
             ].map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-gray-50 p-8 rounded-2xl hover:shadow-lg transition-all duration-300 flex flex-col"
+                className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300 flex flex-col group hover:border-[#44B3C4]"
               >
-                <Quote className="w-8 h-8 text-[#44B3C4] mb-4" />
-                <p className="text-gray-600 leading-relaxed italic">
-                  "{testimonial}"
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-[#44B3C4] to-[#6BC273] flex-shrink-0">
+                    <Image
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                    {/* Fallback initial */}
+                    {/* <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl">
+                      {testimonial.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </div> */}
+                  </div>
+                  <Quote className="w-8 h-8 text-[#44B3C4] flex-shrink-0 mt-2" />
+                </div>
+
+                <p className="text-gray-700 leading-relaxed italic mb-6 text-lg">
+                  "{testimonial.quote}"
                 </p>
+
+                <div className="mt-auto pt-4 border-t border-gray-100">
+                  <div className="font-bold text-gray-900 text-lg">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-gray-600 text-sm">
+                    {testimonial.company}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

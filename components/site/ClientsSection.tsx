@@ -5,6 +5,7 @@ import Image from "next/image";
 const logos = [
   { src: "/clients/1.png", alt: "Client 1" },
   { src: "/clients/2.png", alt: "Client 2" },
+  { src: "/clients/16.png", alt: "Client 16" },
   { src: "/clients/3.png", alt: "Client 3" },
   { src: "/clients/4.png", alt: "Client 4" },
   { src: "/clients/5.png", alt: "Client 5" },
@@ -29,8 +30,8 @@ export default function ClientsSection() {
 
       <div className="overflow-hidden relative">
         {/* Gradient overlays for smooth edges */}
-        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-background to-transparent z-10" />
+        <div className="absolute left-0 top-0 w-50 h-full bg-gradient-to-r from-background to-transparent z-10" />
+        <div className="absolute right-0 top-0 w-50 h-full bg-gradient-to-l from-background to-transparent z-10" />
         
         {/* Slider Wrapper */}
         <div className="flex animate-infinite-scroll">
@@ -44,7 +45,7 @@ export default function ClientsSection() {
                   src={logo.src}
                   alt={logo.alt}
                   fill
-                  className="object-contain grayscale hover:grayscale-0 transition-all duration-500"
+                  className="object-contain transition-all duration-500"
                   sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, (max-width: 1024px) 144px, 160px"
                 />
               </div>

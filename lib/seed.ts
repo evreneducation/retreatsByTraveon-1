@@ -24,6 +24,12 @@ export type Departure = {
   isFeatured?: boolean;
 };
 
+export type PackagePricing = {
+  singleOccupancy: number;
+  doubleOccupancy: number;
+  description?: string;
+};
+
 export type Package = {
   id: string;
   slug: string;
@@ -34,6 +40,7 @@ export type Package = {
   duration: number | string;
   basePrice: number;
   currency?: string;
+  pricing?: PackagePricing;
   heroImage: string;
   gallery: string[];
   highlights: string[];
@@ -165,10 +172,15 @@ export const seedPackages: Package[] = [
     category: "Wellness",
     summary:
       "4 days of yoga, meditation, sound healing, and conscious living led by Arunanand Saraswati in the Himalayas.",
-    location: "Tapovan, Rishikesh, Uttarakhand, India",
+    location: "Phool Chatti Yoga Ashram, Rishikesh, Uttarakhand, India",
     duration: 4,
-    basePrice: 28999,
+    basePrice: 30000,
     currency: "INR",
+    pricing: {
+      singleOccupancy: 30000,
+      doubleOccupancy: 50000,
+      description: "Inclusive off - meals, accommodation, activities",
+    },
     heroImage: "/rishikesh/1.jpg",
     gallery: ["/rishikesh/2.jpg", "/rishikesh/3.jpg", "/rishikesh/4.jpg"],
     highlights: [
@@ -197,38 +209,50 @@ export const seedPackages: Package[] = [
     itinerary: [
       {
         day: 1,
-        title: "Arrival & Grounding",
+        title: "Arrival & Grounding - Awaken",
         description:
-          "Check-in, orientation, walking meditation, sound healing, sattvic dinner.",
+          "12:00-2:00 PM: Arrival & Check-in with herbal welcome drink. 2:30-4:00 PM: Grounding Yoga + Breath Awareness Flow. 4:30-5:30 PM: Tea Break + Intention Setting Circle. 6:00-7:00 PM: Sound Healing Journey (Gong + Singing Bowls). 7:30-9:00 PM: Sattvic Dinner.",
+        meals: {
+          dinner: true,
+        },
       },
       {
         day: 2,
-        title: "Energy Alignment",
-        description: "Shatkriya, pranayama, chakra workshop, Ganga Aarti.",
+        title: "Energy Alignment - Heal",
+        description:
+          "6:30-7:30 AM: Shatkriya (Jal Neti & Basti) + Pranayama + Yoga Flow. 8:00-9:00 AM: Conscious Breakfast. 10:00-11:30 AM: Nature Walk / Forest Bathing. 12:30-1:30 PM: Ayurvedic Lunch. 2:00-3:00 PM: Chakra & Energy Anatomy Workshop. 3:00-4:00 PM: Tea Break + Self-Reflection. 4:00-5:15 PM: Ananta Prana Sadhana. 5:15-5:45 PM: Silent Sitting + Soundscape. 6:00-6:30 PM: Ganga Aarti. 7:00-8:30 PM: Dinner + Optional Sharing Circle.",
+        meals: {
+          breakfast: true,
+          lunch: true,
+          dinner: true,
+        },
       },
       {
         day: 3,
-        title: "Expansion",
+        title: "Expansion - Evolve",
         description:
-          "Chakra yoga, vision board, cyclic meditation, Agni Hotra ceremony.",
+          "6:30-7:30 AM: Shatkriya (Kapalbhati + Agnisar) + Tratak Meditation + Light Yoga. 8:00-9:00 AM: Breakfast. 9:30-12:30 PM: Optional Reiki Level 1 Attunement or Ganga dip / Self-time. 1:00-2:00 PM: Lunch. 3:00-4:00 PM: Cyclic Meditation. 4:30-6:00 PM: Sankalpa & Vision Board Creation. 6:30-7:30 PM: Agni Hotra Fire Ceremony. 8:00 PM: Closing Celebration Dinner with live music.",
+        meals: {
+          breakfast: true,
+          lunch: true,
+          dinner: true,
+        },
       },
       {
         day: 4,
         title: "Integration & Farewell",
         description:
-          "Closing yoga, gratitude meditation, sharing circle, check-out.",
+          "6:30-7:30 AM: Shatkriya (Nauli Demonstration) + Closing Meditation & Sharing Circle. 8:00-9:00 AM: Breakfast. 10:00 AM: Check-out + Farewell Gift Pack.",
+        meals: {
+          breakfast: true,
+        },
       },
     ],
     departures: [
       {
-        startDate: "2025-10-18",
-        endDate: "2025-10-21",
+        startDate: "2025-11-27",
+        endDate: "2025-11-30",
         availability: "Available",
-      },
-      {
-        startDate: "2025-11-22",
-        endDate: "2025-11-25",
-        availability: "Limited",
       },
     ],
     leaders: [
@@ -246,10 +270,10 @@ export const seedPackages: Package[] = [
     ],
     partner: "Arunanand Saraswati",
     partnerLogo: "/rishikesh/anantam.jpg",
+    isFeatured: true,
   },
 
   // --- Nirvana Inner Journey ---
-
   {
     id: "nirvana-naad-wellness-4d",
     slug: "nirvana-inner-journey-naad-wellness",
@@ -259,10 +283,15 @@ export const seedPackages: Package[] = [
       "A 4-day retreat at Naad Wellness Sonipat led by Anant Gogia, blending yoga, sound healing, Mystic Rose meditation, and relaxation therapies.",
     location: "Naad Wellness Sonipat, Haryana, India",
     duration: 4,
-    basePrice: 28000, // Double occupancy as base price
+    basePrice: 40000,
     currency: "INR",
-    heroImage: "/nirvana/1.jpg",
-    gallery: ["/nirvana/2.jpg", "/nirvana/3.jpg", "/nirvana/4.jpg"],
+    pricing: {
+      singleOccupancy: 40000,
+      doubleOccupancy: 56000,
+      description: "Inclusive off - meals, accommodation, activities",
+    },
+    heroImage: "/nirvana/2.jpg",
+    gallery: ["/nirvana/3.jpg", "/nirvana/4.jpg"],
     highlights: [
       "Daily yoga, pranayama & deep relaxation",
       "Special Mystic Rose Meditation for emotional healing",
@@ -304,46 +333,50 @@ export const seedPackages: Package[] = [
         day: 1,
         title: "Arrival & Grounding",
         description:
-          "Arrival, grounding meditation, intention ceremony, yoga, vegetarian dinner, starry night music & optional Yoga Nidra.",
-        meals: { dinner: true },
+          "Arrival at Retreat Centre with warm herbal tea & snacks welcome. Check-in to nature-facing rooms. Opening Circle with intention-setting ceremony. Evening Session with grounding meditation & group connection, Yoga & Pranayama. Dinner: Wholesome vegetarian meal with community sharing & conversations. Night Under The Sky: Live acoustic music under the stars. Optional Yoga Nidra for deep relaxation.",
+        meals: {
+          dinner: true,
+        },
       },
       {
         day: 2,
         title: "Mystic Rose Meditation & Healing",
         description:
-          "Yoga, Mystic Rose Meditation, sound healing, Yoga Nidra, and a magical night of storytelling, music, and dance under the stars.",
-        meals: { breakfast: true, lunch: true, dinner: true },
+          "Morning Yoga & Breathwork session. Mystic Rose Meditation (2 hours) - a transformative practice of laughter, tears & silence. Breakfast. Late Morning Sound Healing Session 1 - Chakra-balancing with Tibetan singing bowls in nature. Lunch. Afternoon rest. Tea & Light Snacks. Yoga Nidra for nervous system reset. Dinner. Night Under The Sky: Storytelling, music, chanting, drumming, dance & open mic.",
+        meals: {
+          breakfast: true,
+          lunch: true,
+          dinner: true,
+        },
       },
       {
         day: 3,
         title: "Naad & Sound Healing",
         description:
-          "Yoga, Naad activities at the resort, deep rest, and indoor sound healing for inner balance.",
-        meals: { breakfast: true, lunch: true, dinner: true },
+          "Morning Yoga & Meditation session. Breakfast. Naad Activities in the Resort. Lunch. Afternoon Return & Rest. Evening Sound Healing Session 2 in indoor space. Dinner.",
+        meals: {
+          breakfast: true,
+          lunch: true,
+          dinner: true,
+        },
       },
       {
         day: 4,
         title: "Departure & Closure",
         description:
-          "Gratitude meditation, light breakfast, closing circle, and heartfelt goodbyes by noon.",
-        meals: { breakfast: true },
+          "Early Morning Yoga & Gratitude Meditation. Light Breakfast. Closing Circle: Reflections, blessings & emotional closure. Departure by Noon.",
+        meals: {
+          breakfast: true,
+        },
       },
     ],
     departures: [
       {
-        startDate: "2025-11-27",
-        endDate: "2025-11-30",
+        startDate: "",
+        endDate: "",
         availability: "Available",
-        price: 40000, // Single occupancy price
-        ctaLabel: "Single Occupancy",
+        ctaLabel: "Inquire for Dates",
         isFeatured: true,
-      },
-      {
-        startDate: "2025-11-27",
-        endDate: "2025-11-30",
-        availability: "Available",
-        price: 28000, // Double occupancy price
-        ctaLabel: "Double Occupancy",
       },
     ],
     leaders: [
@@ -365,7 +398,6 @@ export const seedPackages: Package[] = [
   },
 
   // --- 2 hrs Onsite healing session ---
-
   {
     id: "corporate-sound-healing-2hr",
     slug: "corporate-sound-healing-workshop",
@@ -374,7 +406,7 @@ export const seedPackages: Package[] = [
     summary:
       "A 2-hour onsite Sound Healing corporate wellness workshop designed to reduce stress, reset the nervous system, and elevate team well-being through powerful vibrational therapy.",
     location: "Delhi, Gurgaon, Noida, Faridabad, India",
-    duration: "2 hours", 
+    duration: "2 hours",
     basePrice: 3000,
     currency: "INR",
     heroImage: "/2hrs/1.jpg",
@@ -428,8 +460,8 @@ export const seedPackages: Package[] = [
     ],
     departures: [
       {
-        startDate: "2025-12-01", // Dummy date for display
-        endDate: "2025-12-01",
+        startDate: "",
+        endDate: "",
         availability: "Available",
         ctaLabel: "Inquire for Dates",
         isFeatured: true,
@@ -566,8 +598,13 @@ export const seedPackages: Package[] = [
       "A 4-day retreat in Rishikesh led by Anant Gogia, blending yoga, sound healing, Mystic Rose meditation, and sacred Himalayan rituals.",
     location: "Tapovan, Rishikesh, Uttarakhand, India",
     duration: 4,
-    basePrice: 26999,
+    basePrice: 30000,
     currency: "INR",
+    pricing: {
+      singleOccupancy: 30000,
+      doubleOccupancy: 50000,
+      description: "Inclusive off - meals, accommodation, activities",
+    },
     heroImage: "/anant/1.jpg",
     gallery: ["/anant/2.jpg", "/anant/3.jpg", "/anant/4.jpg", "/anant/5.jpg"],
     highlights: [
@@ -627,14 +664,11 @@ export const seedPackages: Package[] = [
     ],
     departures: [
       {
-        startDate: "2025-12-01",
-        endDate: "2025-12-04",
+        startDate: "",
+        endDate: "",
         availability: "Available",
-      },
-      {
-        startDate: "2026-01-15",
-        endDate: "2026-01-18",
-        availability: "Available",
+        ctaLabel: "Inquire for Dates",
+        isFeatured: true,
       },
     ],
     leaders: [

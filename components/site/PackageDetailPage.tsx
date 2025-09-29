@@ -58,11 +58,21 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-IN", {
+    if (!dateString) return "Custom Date";
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Custom Date";
+
+    return date.toLocaleDateString("en-IN", {
       day: "numeric",
       month: "short",
       year: "numeric",
     });
+  };
+
+  // Check if departure has valid dates
+  const hasValidDates = (departure: any) => {
+    return departure.startDate && departure.endDate;
   };
 
   return (
@@ -166,8 +176,8 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
               <h2 className="text-3xl font-bold mb-6">Highlights</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {pkg.highlights.map((highlight, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0 mt-0.5" />
                     <span className="text-muted-foreground">{highlight}</span>
                   </div>
                 ))}
@@ -190,31 +200,31 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
 
             {/* Itinerary */}
             <div>
-              <h2 className="text-3xl font-bold mb-6">Day-by-Day Itinerary</h2>
-              <div className="space-y-6">
+              <h2 className="text-2xl font-bold mb-6">Daily Schedule</h2>
+              <div className="space-y-4">
                 {pkg.itinerary.map((day, index) => (
                   <Card key={index} className="border-l-4 border-l-blue-500">
-                    <CardHeader>
-                      <div className="flex items-center gap-4">
-                        <div className="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
                           {day.day}
                         </div>
                         <div>
-                          <CardTitle className="text-xl">{day.title}</CardTitle>
+                          <CardTitle className="text-lg">{day.title}</CardTitle>
                           {day.meals && (
-                            <div className="flex gap-2 mt-2">
+                            <div className="flex gap-2 mt-1">
                               {day.meals.breakfast && (
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="secondary" className="text-xs">
                                   Breakfast
                                 </Badge>
                               )}
                               {day.meals.lunch && (
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="secondary" className="text-xs">
                                   Lunch
                                 </Badge>
                               )}
                               {day.meals.dinner && (
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="secondary" className="text-xs">
                                   Dinner
                                 </Badge>
                               )}
@@ -223,28 +233,23 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {day.description}
-                      </p>
-                      {day.activities && (
-                        <div className="mt-4">
-                          <h4 className="font-semibold mb-2">Activities:</h4>
-                          <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                            {day.activities.map((activity, i) => (
-                              <li key={i}>{activity}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {day.stay && (
-                        <div className="mt-4">
-                          <span className="font-semibold">Stay: </span>
-                          <span className="text-muted-foreground">
-                            {day.stay}
-                          </span>
-                        </div>
-                      )}
+                    <CardContent className="pt-0">
+                      <div className="space-y-2">
+                        {day.description.split(". ").map((sentence, i) => {
+                          if (!sentence.trim()) return null;
+                          const cleanSentence = sentence
+                            .replace(/^•\s*/, "")
+                            .trim();
+                          return (
+                            <div key={i} className="flex gap-2 text-sm">
+                              <div className="flex-shrink-0 w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5"></div>
+                              <span className="text-muted-foreground leading-relaxed">
+                                {cleanSentence}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
@@ -347,10 +352,61 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
                     <div className="text-3xl font-bold text-blue-600">
                       {formatPrice(pkg.basePrice, pkg.currency)}
                     </div>
-                    <div className="text-muted-foreground">per person</div>
+                    <div className="text-muted-foreground">
+                      {pkg.pricing ? "Starting from" : "per person"}
+                    </div>
+                    {pkg.pricing?.description && (
+                      <div className="text-sm text-muted-foreground mt-1">
+                        {pkg.pricing.description}
+                      </div>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {/* Detailed Pricing if available */}
+                  {pkg.pricing && (
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                      <h4 className="font-semibold mb-3 text-blue-800">
+                        Choose Your Option
+                      </h4>
+                      <div className="grid gap-3">
+                        <div className="border border-green-200 rounded-lg p-3 bg-green-50">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-semibold text-green-800">
+                              Double Occupancy
+                            </span>
+                            <span className="text-lg font-bold text-green-800">
+                              {formatPrice(
+                                pkg.pricing.doubleOccupancy,
+                                pkg.currency
+                              )}
+                            </span>
+                          </div>
+                          <div className="text-xs text-green-600">
+                            Share with a companion
+                          </div>
+                        </div>
+
+                        <div className="border border-blue-200 rounded-lg p-3 bg-blue-50">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-semibold text-blue-800">
+                              Single Occupancy
+                            </span>
+                            <span className="text-lg font-bold text-blue-800">
+                              {formatPrice(
+                                pkg.pricing.singleOccupancy,
+                                pkg.currency
+                              )}
+                            </span>
+                          </div>
+                          <div className="text-xs text-blue-600">
+                            Private room
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Amenities */}
                   <div>
                     <h4 className="font-semibold mb-3">What's Included:</h4>
@@ -396,47 +452,72 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
               </Card>
 
               {/* Departure Dates */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Available Dates</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {pkg.departures.map((departure, index) => (
-                      <div key={index} className="border rounded-lg p-3">
-                        <div className="flex justify-between items-start mb-2">
-                          <div className="text-sm font-semibold">
-                            {formatDate(departure.startDate)} -{" "}
-                            {formatDate(departure.endDate)}
-                          </div>
-                          <Badge
-                            variant={
-                              departure.availability === "Available"
-                                ? "default"
-                                : departure.availability === "Limited"
-                                  ? "secondary"
-                                  : "destructive"
-                            }
-                            className="text-xs"
-                          >
-                            {departure.availability}
-                          </Badge>
+              {/* Departure Dates */}
+              {pkg.departures && pkg.departures.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Available Dates</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {pkg.departures.map((departure, index) => (
+                        <div key={index} className="border rounded-lg p-3">
+                          {hasValidDates(departure) ? (
+                            // Show dates when available
+                            <>
+                              <div className="flex justify-between items-start mb-2">
+                                <div className="text-sm font-semibold">
+                                  {formatDate(departure.startDate)} -{" "}
+                                  {formatDate(departure.endDate)}
+                                </div>
+                                <Badge
+                                  variant={
+                                    departure.availability === "Available"
+                                      ? "default"
+                                      : departure.availability === "Limited"
+                                        ? "secondary"
+                                        : "destructive"
+                                  }
+                                  className="text-xs"
+                                >
+                                  {departure.availability}
+                                </Badge>
+                              </div>
+                              {departure.price && (
+                                <div className="text-sm text-muted-foreground">
+                                  {formatPrice(departure.price, pkg.currency)}
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            // Show enquiry button when no dates
+                            <div className="text-center">
+                              <div className="text-sm text-muted-foreground mb-3">
+                                Dates to be announced soon
+                              </div>
+                              <a
+                                href="https://wa.me/9540111307?text=Hi! I'm interested in this retreat and would like to inquire about available dates."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button className="w-full" size="sm">
+                                  <Phone className="h-4 w-4 mr-2" />
+                                  {departure.ctaLabel || "Inquire for Dates"}
+                                </Button>
+                              </a>
+                            </div>
+                          )}
+                          {/* {departure.isFeatured && (
+                            <Badge className="mt-2 text-xs bg-yellow-500 text-black">
+                              {departure.ctaLabel || "Special Offer"}
+                            </Badge>
+                          )} */}
                         </div>
-                        {departure.price && (
-                          <div className="text-sm text-muted-foreground">
-                            {formatPrice(departure.price, pkg.currency)}
-                          </div>
-                        )}
-                        {departure.isFeatured && (
-                          <Badge className="mt-2 text-xs bg-yellow-500 text-black">
-                            {departure.ctaLabel || "Special Offer"}
-                          </Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Partner Info */}
               {pkg.partner && (
@@ -492,68 +573,7 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
         </div>
 
         {/* Testimonials Section */}
-        <TestimonialsSection
-          packageId={pkg.title.split(" ")[0]}
-          className="mt-16"
-        />
-
-        {/* FAQ Section */}
-        {/* <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">
-            Frequently Asked Questions
-          </h2>
-          <div className="max-w-3xl mx-auto space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">
-                  What's the best time to book?
-                </h3>
-                <p className="text-muted-foreground">
-                  We recommend booking at least 30 days in advance for the best
-                  availability and rates. Popular dates fill up quickly,
-                  especially during peak season.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">
-                  What if I need to cancel?
-                </h3>
-                <p className="text-muted-foreground">
-                  Cancellation policies vary by package and timing. Generally,
-                  cancellations made 30+ days in advance receive full refund
-                  minus processing fees. Contact us for specific details.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">
-                  Are solo travelers welcome?
-                </h3>
-                <p className="text-muted-foreground">
-                  Absolutely! Many of our guests travel solo. We can arrange
-                  single occupancy rooms (supplement may apply) and help connect
-                  you with other solo travelers.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">What should I pack?</h3>
-                <p className="text-muted-foreground">
-                  A detailed packing list will be provided upon booking.
-                  Generally includes comfortable clothing, walking shoes, sun
-                  protection, and any specific items mentioned in the itinerary.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div> */}
+        <TestimonialsSection packageId={pkg.id} className="mt-16" />
       </div>
     </div>
   );

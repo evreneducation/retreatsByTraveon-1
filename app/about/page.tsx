@@ -19,27 +19,32 @@ export default function AboutPage() {
               allowFullScreen
               title="Traveon Retreats Experience"
               style={{
-                aspectRatio: '16/9'
+                aspectRatio: "16/9",
               }}
             />
           </div>
         </div>
-        
+
         {/* Dark Overlay for Better Text Readability */}
         <div className="absolute inset-0 bg-black/30" />
-        
+
         {/* Content Overlay */}
         <div className="relative z-10 h-full flex items-center justify-center text-center">
           <div className="text-white max-w-4xl mx-auto px-6">
             <div className="inline-block mb-4">
-              <span className="bg-gradient-to-r from-blue-300 to-green-300 bg-clip-text text-transparent font-semibold text-lg sm:text-xl lg:text-3xl tracking-wide">
+              <span className="text-white font-semibold text-lg sm:text-xl lg:text-3xl tracking-wide">
                 THE EXPERIENCES ARM OF TRAVEON VENTURES
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-              Relax Reconnect Reset
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight relative">
+              <span className="relative bg-gradient-to-r from-blue-300 to-green-300 bg-clip-text text-transparent">
+                Relax
+                <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 bg-gradient-to-r from-blue-300 to-green-300 rounded-full mx-3 sm:mx-4 lg:mx-5 xl:mx-6 align-middle"></span>
+                Reconnect
+                <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 bg-gradient-to-r from-blue-300 to-green-300 rounded-full mx-3 sm:mx-4 lg:mx-5 xl:mx-6 align-middle"></span>
+                Reset
+              </span>
             </h1>
-            
           </div>
         </div>
       </div>
@@ -52,12 +57,12 @@ export default function AboutPage() {
             <div className="flex justify-center order-2 lg:order-1">
               <div className="w-full max-w-lg">
                 <Image
-                  src="/about/about.gif" 
+                  src="/about/about.gif"
                   alt="Traveon Retreats Experience"
                   width={500}
                   height={400}
                   className="w-full h-auto rounded-2xl shadow-lg"
-                  unoptimized 
+                  unoptimized
                 />
               </div>
             </div>
@@ -71,34 +76,43 @@ export default function AboutPage() {
                 </span>
               </h2>
               <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8">
-                Within themselves, within teams, and within communities through thoughtfully 
-                curated experiences that blend local culture, nature, and premium hospitality.
+                Within themselves, within teams, and within communities through
+                thoughtfully curated experiences that blend local culture,
+                nature, and premium hospitality.
               </p>
-              
+
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="flex items-center space-x-3">
                   <div className="bg-blue-100 rounded-full p-2">
                     <span className="text-blue-600 text-xl">🌍</span>
                   </div>
-                  <span className="font-semibold text-gray-900">Global Reach</span>
+                  <span className="font-semibold text-gray-900">
+                    Global Reach
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="bg-green-100 rounded-full p-2">
                     <span className="text-green-600 text-xl">✨</span>
                   </div>
-                  <span className="font-semibold text-gray-900">Premium Quality</span>
+                  <span className="font-semibold text-gray-900">
+                    Premium Quality
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="bg-purple-100 rounded-full p-2">
                     <span className="text-purple-600 text-xl">🤝</span>
                   </div>
-                  <span className="font-semibold text-gray-900">Local Partnerships</span>
+                  <span className="font-semibold text-gray-900">
+                    Local Partnerships
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="bg-orange-100 rounded-full p-2">
                     <span className="text-orange-600 text-xl">🎯</span>
                   </div>
-                  <span className="font-semibold text-gray-900">Purpose-Driven</span>
+                  <span className="font-semibold text-gray-900">
+                    Purpose-Driven
+                  </span>
                 </div>
               </div>
             </div>
@@ -231,7 +245,8 @@ export default function AboutPage() {
               Your Journey with Traveon
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-              From initial planning to unforgettable memories, we guide you through every step
+              From initial planning to unforgettable memories, we guide you
+              through every step
             </p>
           </div>
 
@@ -242,7 +257,8 @@ export default function AboutPage() {
                 <h3 className="text-xl font-bold text-gray-900">Plan</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Collaborative planning with our experts to design your perfect experience
+                Collaborative planning with our experts to design your perfect
+                experience
               </p>
             </div>
 
@@ -252,7 +268,8 @@ export default function AboutPage() {
                 <h3 className="text-xl font-bold text-gray-900">Experience</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Immerse yourself in carefully curated activities and local culture
+                Immerse yourself in carefully curated activities and local
+                culture
               </p>
             </div>
 
@@ -262,7 +279,8 @@ export default function AboutPage() {
                 <h3 className="text-xl font-bold text-gray-900">Transform</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Return with renewed energy, deeper connections, and lasting memories
+                Return with renewed energy, deeper connections, and lasting
+                memories
               </p>
             </div>
           </div>
@@ -276,7 +294,8 @@ export default function AboutPage() {
                 Built on Trust
               </h2>
               <p className="text-base lg:text-xl text-gray-600 px-4">
-                Our commitment to excellence is reflected in every aspect of our service delivery
+                Our commitment to excellence is reflected in every aspect of our
+                service delivery
               </p>
             </div>
 
@@ -289,7 +308,8 @@ export default function AboutPage() {
                   Partner Network
                 </h3>
                 <p className="text-sm lg:text-base text-gray-600 px-2">
-                  Trusted on-ground partners who share our commitment to quality and authenticity
+                  Trusted on-ground partners who share our commitment to quality
+                  and authenticity
                 </p>
               </div>
 
@@ -301,7 +321,8 @@ export default function AboutPage() {
                   Safety Standards
                 </h3>
                 <p className="text-sm lg:text-base text-gray-600 px-2">
-                  Rigorous safety protocols ensuring peace of mind throughout your journey
+                  Rigorous safety protocols ensuring peace of mind throughout
+                  your journey
                 </p>
               </div>
 
@@ -313,7 +334,8 @@ export default function AboutPage() {
                   Transparent Pricing
                 </h3>
                 <p className="text-sm lg:text-base text-gray-600 px-2">
-                  Clear budgets with no hidden costs—just beautifully run experiences
+                  Clear budgets with no hidden costs—just beautifully run
+                  experiences
                 </p>
               </div>
             </div>
