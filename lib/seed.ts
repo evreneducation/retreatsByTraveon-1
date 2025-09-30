@@ -589,7 +589,7 @@ export const seedPackages: Package[] = [
   },
 
   // --- Nirvana with Anant Gogia ---
-  {
+    {
     id: "nirvana-anant-4d",
     slug: "nirvana-inner-journey-anant",
     title: "Nirvana — Inner Journey Meditation & Healing",
@@ -603,7 +603,7 @@ export const seedPackages: Package[] = [
     pricing: {
       singleOccupancy: 30000,
       doubleOccupancy: 50000,
-      description: "Inclusive off - meals, accommodation, activities",
+      description: "Inclusive of - meals, accommodation, activities",
     },
     heroImage: "/anant/1.jpg",
     gallery: ["/anant/2.jpg", "/anant/3.jpg", "/anant/4.jpg", "/anant/5.jpg"],
@@ -639,27 +639,43 @@ export const seedPackages: Package[] = [
     itinerary: [
       {
         day: 1,
-        title: "Arrival & Grounding",
+        title: "Arrival & Grounding - Awaken",
         description:
-          "Check-in, herbal tea, opening circle, evening yoga, bonfire & live music.",
+          "12:00-2:00 PM: Arrival & Check-in with herbal welcome drink. 2:30-4:00 PM: Grounding Yoga + Breath Awareness Flow. 4:30-5:30 PM: Tea Break + Intention Setting Circle. 6:00-7:00 PM: Sound Healing Journey (Gong + Singing Bowls). 7:30-9:00 PM: Sattvic Dinner.",
+        meals: {
+          dinner: true,
+        },
       },
       {
         day: 2,
-        title: "Himalayan Sunrise & Sound Journey",
+        title: "Energy Alignment - Heal",
         description:
-          "Sunrise temple meditation, Mystic Rose practice, sound healing, yoga nidra, bonfire storytelling.",
+          "6:30-7:30 AM: Shatkriya (Jal Neti & Basti) + Pranayama + Yoga Flow. 8:00-9:00 AM: Conscious Breakfast. 10:00-11:30 AM: Nature Walk / Forest Bathing. 12:30-1:30 PM: Ayurvedic Lunch. 2:00-3:00 PM: Chakra & Energy Anatomy Workshop. 3:00-4:00 PM: Tea Break + Self-Reflection. 4:00-5:15 PM: Ananta Prana Sadhana. 5:15-5:45 PM: Silent Sitting + Soundscape. 6:00-6:30 PM: Ganga Aarti. 7:00-8:30 PM: Dinner + Optional Sharing Circle.",
+        meals: {
+          breakfast: true,
+          lunch: true,
+          dinner: true,
+        },
       },
       {
         day: 3,
-        title: "Village Trek & Ganga Aarti",
+        title: "Expansion - Evolve",
         description:
-          "Morning yoga, picnic lunch in Himalayan village, sound healing, evening Ganga Aarti in Rishikesh.",
+          "6:30-7:30 AM: Shatkriya (Kapalbhati + Agnisar) + Tratak Meditation + Light Yoga. 8:00-9:00 AM: Breakfast. 9:30-12:30 PM: Optional Reiki Level 1 Attunement or Ganga dip / Self-time. 1:00-2:00 PM: Lunch. 3:00-4:00 PM: Cyclic Meditation. 4:30-6:00 PM: Sankalpa & Vision Board Creation. 6:30-7:30 PM: Agni Hotra Fire Ceremony. 8:00 PM: Closing Celebration Dinner with live music.",
+        meals: {
+          breakfast: true,
+          lunch: true,
+          dinner: true,
+        },
       },
       {
         day: 4,
-        title: "Integration & Departure",
+        title: "Integration & Farewell",
         description:
-          "Closing yoga, gratitude meditation, farewell circle, checkout.",
+          "6:30-7:30 AM: Shatkriya (Nauli Demonstration) + Closing Meditation & Sharing Circle. 8:00-9:00 AM: Breakfast. 10:00 AM: Check-out + Farewell Gift Pack.",
+        meals: {
+          breakfast: true,
+        },
       },
     ],
     departures: [

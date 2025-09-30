@@ -129,7 +129,7 @@ function LightVideo({
   );
 }
 
-// Sample testimonials - you can replace with real data
+// Updated testimonials with packageIds
 const sampleTestimonials: Testimonial[] = [
   // Phool Chatti - Arunanand - Only Meenakshi Bansal
   {
@@ -141,7 +141,7 @@ const sampleTestimonials: Testimonial[] = [
     review:
       "The Nirvana wellness retreat was absolutely transformative. Arunanand's guidance through meditation and sound healing helped me find inner peace I didn't know I was looking for.",
     packageTitle: "Nirvana — Anantam a Holistic Wellness Retreat",
-    travelDate: "27-30 Nov 2025",
+    travelDate: "",
     verified: true,
     type: "text",
     packageIds: ["nirvana-arunanand-4d"] // Only for Phool Chatti package
@@ -156,7 +156,7 @@ const sampleTestimonials: Testimonial[] = [
     review:
       "During the wellness retreat, I discovered a new sense of energy and positivity all around me. By practicing mindfulness daily, I now feel calmer, healthier, and more balanced in life.",
     packageTitle: "Nirvana — Inner Journey Meditation & Healing",
-    travelDate: "27-30 Nov 2025",
+    travelDate: "",
     verified: true,
     type: "text",
     packageIds: ["nirvana-naad-wellness-4d"] // Only for Naad Wellness package
@@ -171,14 +171,14 @@ const sampleTestimonials: Testimonial[] = [
     review:
       "The Himalayan retreat experience was incredible. The combination of yoga, meditation, and sound healing in the mountains created a perfect environment for self-discovery and inner peace.",
     packageTitle: "Nirvana — Inner Journey Meditation & Healing",
-    travelDate: "December 2024",
+    travelDate: "",
     verified: true,
     type: "text",
     packageIds: ["nirvana-anant-4d"] // Only for Tapovan Rishikesh package
   },
-  // Magical Muscat
+  // Magical Muscat - Aditya Kumar - Only for Magical Muscat package
   {
-    id: "2",
+    id: "magical-muscat-1",
     name: "Aditya Kumar",
     location: "Delhi, India",
     avatar: "/testimonials/3.jpg",
@@ -189,10 +189,11 @@ const sampleTestimonials: Testimonial[] = [
     travelDate: "November 2024",
     verified: true,
     type: "video",
+    packageIds: ["magical-muscat-5d", "magical-muscat"] // Multiple IDs for better matching
   },
-  // Seychelles
+  // Seychelles - Anil Kumar - Only for Seychelles package
   {
-    id: "3",
+    id: "seychelles-1",
     name: "Anil Kumar",
     location: "Bangalore, India",
     avatar: "/testimonials/1.jpg",
@@ -203,12 +204,13 @@ const sampleTestimonials: Testimonial[] = [
     travelDate: "October 2024",
     verified: true,
     type: "text",
+    packageIds: ["seychelles-group-tour", "seychelles"] // Multiple IDs for better matching
   },
   // Corporate Sound Healing Testimonials
   {
     id: "corp-1",
     name: "Lokesh",
-    location: "Gurgaon, India",
+    location: "",
     avatar: "/testimonials/10.png",
     rating: 5,
     review:
@@ -218,13 +220,14 @@ const sampleTestimonials: Testimonial[] = [
     verified: true,
     type: "text",
     company: "Google",
-    role: "Employee",
+    role: "Gurgaon",
     employees: "",
+    packageIds: ["corporate-sound-healing", "2hrs-onsite-sound-healing", "corporate", "sound-healing"] // Multiple IDs for better matching
   },
   {
     id: "corp-2",
     name: "Jigyasa Saxena",
-    location: "Delhi, India",
+    location: "",
     avatar: "/testimonials/6.jpg",
     rating: 5,
     review:
@@ -234,8 +237,9 @@ const sampleTestimonials: Testimonial[] = [
     verified: true,
     type: "text",
     company: "Google",
-    role: "VP Operations",
+    role: "Gurgaon",
     employees: "",
+    packageIds: ["corporate-sound-healing", "2hrs-onsite-sound-healing", "corporate", "sound-healing"] // Multiple IDs for better matching
   },
 ];
 
@@ -255,18 +259,21 @@ export function TestimonialsSection({
     ? sampleTestimonials.filter((t) => {
         // First check if testimonial has specific packageIds
         if (t.packageIds && t.packageIds.length > 0) {
-          return t.packageIds.includes(packageId);
+          return t.packageIds.some(pid => 
+            packageId.toLowerCase().includes(pid.toLowerCase()) || 
+            pid.toLowerCase().includes(packageId.toLowerCase())
+          );
         }
         
         // Fallback to package title matching for packages without specific IDs
+        const packageIdLower = packageId.toLowerCase();
         return (
-          t.packageTitle.toLowerCase().includes(packageId.toLowerCase()) ||
-          (packageId.toLowerCase().includes("2hr") &&
-            t.id.startsWith("corp-")) ||
-          (packageId.toLowerCase().includes("corporate") &&
-            t.id.startsWith("corp-")) ||
-          (packageId.toLowerCase().includes("sound") &&
-            t.id.startsWith("corp-"))
+          t.packageTitle.toLowerCase().includes(packageIdLower) ||
+          (packageIdLower.includes("2hr") && t.id.startsWith("corp-")) ||
+          (packageIdLower.includes("corporate") && t.id.startsWith("corp-")) ||
+          (packageIdLower.includes("sound") && t.id.startsWith("corp-")) ||
+          (packageIdLower.includes("seychelles") && t.id === "seychelles-1") ||
+          (packageIdLower.includes("muscat") && t.id === "magical-muscat-1")
         );
       })
     : sampleTestimonials;
@@ -289,7 +296,16 @@ export function TestimonialsSection({
     packageId &&
     (packageId.toLowerCase().includes("2hr") ||
       packageId.toLowerCase().includes("corporate") ||
-      packageId.toLowerCase().includes("sound"));
+      packageId.toLowerCase().includes("sound") ||
+      packageId.toLowerCase().includes("workshop"));
+
+  // Debug: Log filtered testimonials (remove in production)
+  useEffect(() => {
+    if (packageId) {
+      console.log(`Package ID: ${packageId}`);
+      console.log(`Filtered testimonials:`, filteredTestimonials);
+    }
+  }, [packageId, filteredTestimonials]);
 
   return (
     <div className={className}>
@@ -306,114 +322,123 @@ export function TestimonialsSection({
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {displayTestimonials.map((testimonial, index) => (
-          <motion.div
-            key={testimonial.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Card className="h-full hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
-              <CardContent className="p-6">
-                {/* Video Testimonial */}
-                {testimonial.type === "video" && testimonial.videoUrl && (
-                  <div className="mb-4 h-48 relative rounded-lg overflow-hidden">
-                    <LightVideo
-                      src={testimonial.videoUrl}
-                      autoplayOnView={false}
-                      className="h-full w-full"
-                      controls={true}
-                      muted={true}
-                      poster={testimonial.avatar}
-                    />
-                  </div>
-                )}
-
-                {/* Quote Icon for text testimonials */}
-                {testimonial.type !== "video" && (
-                  <div className="mb-4">
-                    <Quote className="h-8 w-8 text-blue-500 opacity-60" />
-                  </div>
-                )}
-
-                {/* Rating */}
-                <div className="flex items-center gap-1 mb-4">
-                  {renderStars(testimonial.rating)}
-                </div>
-
-                {/* Review Text */}
-                <p className="text-muted-foreground mb-6 line-clamp-4 leading-relaxed">
-                  "{testimonial.review}"
-                </p>
-
-                {/* Package Info */}
-                <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="text-sm font-medium text-blue-600 line-clamp-1">
-                    {testimonial.packageTitle}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {testimonial.travelDate}
-                  </div>
-                  {testimonial.employees && (
-                    <div className="text-xs text-green-600 font-medium mt-1">
-                      {testimonial.employees}
-                    </div>
-                  )}
-                </div>
-
-                {/* User Info */}
-                <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                    <Image
-                      src={testimonial.avatar}
-                      alt={testimonial.name}
-                      fill
-                      className="object-cover"
-                      onError={(e) => {
-                        // Fallback for broken images
-                        const target = e.target as HTMLImageElement;
-                        target.src = "/fallback-avatar.png";
-                      }}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <div className="font-semibold text-sm">
-                        {testimonial.name}
-                      </div>
-                      {testimonial.verified && (
-                        <Badge
-                          variant="secondary"
-                          className="text-xs px-2 py-0"
-                        >
-                          Verified
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {testimonial.location}
-                    </div>
-                    {testimonial.company && testimonial.role && (
-                      <div className="text-xs text-blue-600 font-medium">
-                        {testimonial.role}, {testimonial.company}
+      {displayTestimonials.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No testimonials found for this package.</p>
+          <p className="text-sm text-muted-foreground mt-2">Package ID: {packageId}</p>
+        </div>
+      ) : (
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayTestimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
+                  <CardContent className="p-6">
+                    {/* Video Testimonial */}
+                    {testimonial.type === "video" && testimonial.videoUrl && (
+                      <div className="mb-4 h-48 relative rounded-lg overflow-hidden">
+                        <LightVideo
+                          src={testimonial.videoUrl}
+                          autoplayOnView={false}
+                          className="h-full w-full"
+                          controls={true}
+                          muted={true}
+                          poster={testimonial.avatar}
+                        />
                       </div>
                     )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
 
-      {/* View All Reviews Link */}
-      {filteredTestimonials.length > limit && (
-        <div className="text-center mt-8">
-          <button className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
-            View All Reviews ({filteredTestimonials.length - limit} more)
-          </button>
-        </div>
+                    {/* Quote Icon for text testimonials */}
+                    {testimonial.type !== "video" && (
+                      <div className="mb-4">
+                        <Quote className="h-8 w-8 text-blue-500 opacity-60" />
+                      </div>
+                    )}
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mb-4">
+                      {renderStars(testimonial.rating)}
+                    </div>
+
+                    {/* Review Text */}
+                    <p className="text-muted-foreground mb-6 line-clamp-4 leading-relaxed">
+                      "{testimonial.review}"
+                    </p>
+
+                    {/* Package Info */}
+                    <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="text-sm font-medium text-blue-600 line-clamp-1">
+                        {testimonial.packageTitle}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        {testimonial.travelDate}
+                      </div>
+                      {testimonial.employees && (
+                        <div className="text-xs text-green-600 font-medium mt-1">
+                          {testimonial.employees}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* User Info */}
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                        <Image
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          fill
+                          className="object-cover"
+                          onError={(e) => {
+                            // Fallback for broken images
+                            const target = e.target as HTMLImageElement;
+                            target.src = "/fallback-avatar.png";
+                          }}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <div className="font-semibold text-sm">
+                            {testimonial.name}
+                          </div>
+                          {testimonial.verified && (
+                            <Badge
+                              variant="secondary"
+                              className="text-xs px-2 py-0"
+                            >
+                              Verified
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {testimonial.location}
+                        </div>
+                        {testimonial.company && testimonial.role && (
+                          <div className="text-xs text-blue-600 font-medium">
+                            {testimonial.role}, {testimonial.company}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* View All Reviews Link */}
+          {filteredTestimonials.length > limit && (
+            <div className="text-center mt-8">
+              <button className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                View All Reviews ({filteredTestimonials.length - limit} more)
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* Trust Indicators */}
