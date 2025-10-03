@@ -184,7 +184,7 @@ _Sent from Retreat Contact Form_
                 </button>
               </a>
 
-              <a
+              {/* <a
                 href="https://www.facebook.com/retreatsbytraveon/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -192,7 +192,7 @@ _Sent from Retreat Contact Form_
                 <button className="w-12 h-12 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 cursor-pointer">
                   <Facebook className="w-5 h-5 text-white" />
                 </button>
-              </a>
+              </a> */}
 
               <a
                 href="https://www.youtube.com/@TraveonVentures"
