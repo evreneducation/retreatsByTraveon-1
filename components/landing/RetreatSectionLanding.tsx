@@ -8,7 +8,6 @@ interface CardData {
   icon: React.ReactNode;
   title: string;
   description: string;
-  location: string;
   iconBg: string;
   locationColor: string;
 }
@@ -42,10 +41,9 @@ const RetreatSectionLanding: React.FC = () => {
           ></path>
         </svg>
       ),
-      title: "Natural Hot Springs",
+      title: "Near Ganga River",
       description:
         "Soak in therapeutic mineral-rich waters surrounded by pristine nature, perfect for deep relaxation and muscle recovery.",
-      location: "Geothermal Wellness Centers",
       iconBg: "bg-[#1e9bd9]",
       locationColor: "text-[#1e9bd9]",
     },
@@ -73,10 +71,9 @@ const RetreatSectionLanding: React.FC = () => {
           />
         </svg>
       ),
-      title: "Tropical Yoga Studios",
+      title: "Organic Sattvik Meals",
       description:
-        "Practice yoga in open-air studios with breathtaking ocean views and lush tropical gardens as your backdrop.",
-      location: "Beachfront Wellness Resorts",
+        "Experience authentic flavours of India prepared intentionally with love.",
       iconBg: "bg-[#4aaf52]",
       locationColor: "text-[#4aaf52]",
     },
@@ -268,14 +265,7 @@ const RetreatSectionLanding: React.FC = () => {
                   <div
                     className={`flex items-center gap-2 text-sm ${card.locationColor}`}
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                    </svg>
-                    <span className="font-medium">{card.location}</span>
+                   
                   </div>
                 </div>
               </div>
@@ -326,22 +316,6 @@ const RetreatSectionLanding: React.FC = () => {
                   />
                 </svg>
                 Book Your Retreat
-              </button>
-              <button className="bg-white text-[#4aaf52] border-2 border-[#4aaf52] px-9 py-4 rounded-full text-base font-semibold inline-flex items-center gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] w-full sm:w-auto justify-center">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                View Gallery
               </button>
             </div>
           </div>
