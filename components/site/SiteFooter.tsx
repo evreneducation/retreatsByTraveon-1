@@ -68,7 +68,10 @@ export function SiteFooter() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email, 
+          source: 'main-website' // Added source parameter as required by your API
+        }),
       });
 
       const data = await response.json();

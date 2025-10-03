@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email, source } = await request.json();
 
     // Validate email
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -23,56 +23,130 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create transporter with better configuration
+    // Create transporter with Gmail SMTP
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
       },
-      // Add additional options for better reliability
-      secure: false,
-      tls: {
-        rejectUnauthorized: false
-      }
+      secure: true,
     });
 
     // Verify transporter connection
     await transporter.verify();
 
+    // Determine source
+    const pageSource = source === 'landing' ? 'Landing Page' : 'Main Website';
+
     // Email content
     const mailOptions = {
-      from: process.env.SMTP_FROM || 'newsletter@traveon.in',
-      to: 'info@traveon.in',
-      replyTo: email, // So you can reply directly to the subscriber
-      subject: 'New Newsletter Subscription - Retreats by Traveon',
+      from: process.env.SMTP_USER, // Gmail requires the authenticated user as sender
+      to: 'info@traveon.in', // Zoho email 
+      replyTo: email,
+      subject: `New Newsletter Subscription - ${pageSource}`,
       html: `
         <!DOCTYPE html>
         <html>
           <head>
             <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: #f4f4f4; padding: 20px; text-align: center; border-radius: 5px; }
-              .content { padding: 20px; background: white; }
-              .email { font-size: 18px; color: #007bff; font-weight: bold; }
-              .info { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0; }
+              body { 
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                line-height: 1.6; 
+                color: #333;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+              }
+              .container { 
+                max-width: 600px; 
+                margin: 20px auto; 
+                background: white;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+              }
+              .header { 
+                background: linear-gradient(135deg, #4a9f4d, #8bc34a);
+                padding: 30px 20px; 
+                text-align: center;
+                color: white;
+              }
+              .header h2 {
+                margin: 0;
+                font-size: 24px;
+              }
+              .content { 
+                padding: 30px;
+              }
+              .info-box { 
+                background: #f8f9fa; 
+                padding: 20px; 
+                border-radius: 8px; 
+                margin: 20px 0;
+                border-left: 4px solid #4a9f4d;
+              }
+              .email { 
+                font-size: 18px; 
+                color: #4a9f4d; 
+                font-weight: bold;
+                word-break: break-all;
+              }
+              .label {
+                font-weight: 600;
+                color: #555;
+                margin-bottom: 5px;
+              }
+              .badge {
+                display: inline-block;
+                background: #4a9f4d;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                margin-top: 10px;
+              }
+              .footer {
+                background: #f8f9fa;
+                padding: 20px;
+                text-align: center;
+                color: #666;
+                font-size: 12px;
+              }
             </style>
           </head>
           <body>
             <div class="container">
               <div class="header">
-                <h2>🎉 New Newsletter Subscription</h2>
+                <h2>🌿 New Newsletter Subscription</h2>
               </div>
               <div class="content">
-                <div class="info">
-                  <p><strong>New subscriber email:</strong></p>
+                <p>Great news! You have a new subscriber for your retreat updates.</p>
+                
+                <div class="info-box">
+                  <p class="label">📧 Subscriber Email:</p>
                   <p class="email">${email}</p>
+                  
+                  <p class="label" style="margin-top: 15px;">📅 Subscription Date:</p>
+                  <p>${new Date().toLocaleString('en-IN', { 
+                    timeZone: 'Asia/Kolkata',
+                    dateStyle: 'full',
+                    timeStyle: 'short'
+                  })}</p>
+                  
+                  <p class="label" style="margin-top: 15px;">📍 Source:</p>
+                  <span class="badge">${pageSource}</span>
                 </div>
-                <p><strong>Subscription Date:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
-                <p><strong>Source:</strong> Website Newsletter Form</p>
-                <br>
-                <p><em>This subscriber is interested in receiving updates about wellness retreats, corporate retreats, and travel experiences.</em></p>
+                
+                <p style="background: #fff3cd; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107;">
+                  <strong>💡 Next Steps:</strong><br>
+                  Add this subscriber to your newsletter mailing list to keep them updated about wellness retreats, corporate experiences, and travel programs.
+                </p>
+              </div>
+              <div class="footer">
+                <p>This is an automated notification from Retreats by Traveon</p>
+                <p>© ${new Date().getFullYear()} Retreats by Traveon. All rights reserved.</p>
               </div>
             </div>
           </body>
@@ -83,31 +157,32 @@ export async function POST(request: NextRequest) {
     // Send email
     await transporter.sendMail(mailOptions);
 
-    console.log(`Newsletter subscription successful for: ${email}`);
+    console.log(`Newsletter subscription successful for: ${email} from ${pageSource}`);
 
     return NextResponse.json(
-      { message: 'Thank you for subscribing! We will keep you updated with our latest retreats and wellness tips.' },
+      { 
+        message: 'Thank you for subscribing! We will keep you updated with our latest retreats and wellness tips.',
+        success: true 
+      },
       { status: 200 }
     );
 
   } catch (error: any) {
-    console.error('Newsletter subscription error details:', {
+    console.error('Newsletter subscription error:', {
       error: error.message,
       code: error.code,
-      stack: error.stack
     });
 
-    // More specific error messages
     let errorMessage = 'Failed to subscribe. Please try again later.';
     
     if (error.code === 'EAUTH') {
-      errorMessage = 'Authentication failed. Please check email configuration.';
-    } else if (error.code === 'ECONNECTION') {
-      errorMessage = 'Connection error. Please check your internet connection.';
+      errorMessage = 'Email service authentication failed. Please contact support.';
+    } else if (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT') {
+      errorMessage = 'Connection error. Please check your internet connection and try again.';
     }
 
     return NextResponse.json(
-      { error: errorMessage },
+      { error: errorMessage, success: false },
       { status: 500 }
     );
   }
